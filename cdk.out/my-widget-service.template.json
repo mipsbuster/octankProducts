@@ -1,0 +1,817 @@
+{
+  "Parameters": {
+    "custId": {
+      "Type": "String",
+      "Description": "The id of the customer."
+    },
+    "prodId": {
+      "Type": "String",
+      "Description": "The id of the prod."
+    },
+    "AssetParametersaacad069d2f055a63ca0d41a6848d465f936a2b60f5f4e1ba925b441e9f6728aS3BucketAAA2CE8F": {
+      "Type": "String",
+      "Description": "S3 bucket for asset \"aacad069d2f055a63ca0d41a6848d465f936a2b60f5f4e1ba925b441e9f6728a\""
+    },
+    "AssetParametersaacad069d2f055a63ca0d41a6848d465f936a2b60f5f4e1ba925b441e9f6728aS3VersionKeyF3ED2B69": {
+      "Type": "String",
+      "Description": "S3 key for asset version \"aacad069d2f055a63ca0d41a6848d465f936a2b60f5f4e1ba925b441e9f6728a\""
+    },
+    "AssetParametersaacad069d2f055a63ca0d41a6848d465f936a2b60f5f4e1ba925b441e9f6728aArtifactHashEB48046E": {
+      "Type": "String",
+      "Description": "Artifact hash for asset \"aacad069d2f055a63ca0d41a6848d465f936a2b60f5f4e1ba925b441e9f6728a\""
+    }
+  },
+  "Resources": {
+    "WidgetsServiceWidgetStoreFD4B0C0E": {
+      "Type": "AWS::S3::Bucket",
+      "Properties": {
+        "Tags": [
+          {
+            "Key": "custID",
+            "Value": {
+              "Ref": "custId"
+            }
+          }
+        ]
+      },
+      "UpdateReplacePolicy": "Retain",
+      "DeletionPolicy": "Retain",
+      "Metadata": {
+        "aws:cdk:path": "my-widget-service/WidgetsService/WidgetStore/Resource"
+      }
+    },
+    "WidgetsServiceWidgetHandlerServiceRole2E493D62": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "lambda.amazonaws.com"
+              }
+            }
+          ],
+          "Version": "2012-10-17"
+        },
+        "ManagedPolicyArns": [
+          {
+            "Fn::Join": [
+              "",
+              [
+                "arn:",
+                {
+                  "Ref": "AWS::Partition"
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+              ]
+            ]
+          }
+        ],
+        "Tags": [
+          {
+            "Key": "custID",
+            "Value": {
+              "Ref": "custId"
+            }
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "my-widget-service/WidgetsService/WidgetHandler/ServiceRole/Resource"
+      }
+    },
+    "WidgetsServiceWidgetHandlerServiceRoleDefaultPolicy17612986": {
+      "Type": "AWS::IAM::Policy",
+      "Properties": {
+        "PolicyDocument": {
+          "Statement": [
+            {
+              "Action": [
+                "s3:GetObject*",
+                "s3:GetBucket*",
+                "s3:List*",
+                "s3:DeleteObject*",
+                "s3:PutObject*",
+                "s3:Abort*"
+              ],
+              "Effect": "Allow",
+              "Resource": [
+                {
+                  "Fn::GetAtt": [
+                    "WidgetsServiceWidgetStoreFD4B0C0E",
+                    "Arn"
+                  ]
+                },
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      {
+                        "Fn::GetAtt": [
+                          "WidgetsServiceWidgetStoreFD4B0C0E",
+                          "Arn"
+                        ]
+                      },
+                      "/*"
+                    ]
+                  ]
+                }
+              ]
+            }
+          ],
+          "Version": "2012-10-17"
+        },
+        "PolicyName": "WidgetsServiceWidgetHandlerServiceRoleDefaultPolicy17612986",
+        "Roles": [
+          {
+            "Ref": "WidgetsServiceWidgetHandlerServiceRole2E493D62"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "my-widget-service/WidgetsService/WidgetHandler/ServiceRole/DefaultPolicy/Resource"
+      }
+    },
+    "WidgetsServiceWidgetHandler95C207D7": {
+      "Type": "AWS::Lambda::Function",
+      "Properties": {
+        "Code": {
+          "S3Bucket": {
+            "Ref": "AssetParametersaacad069d2f055a63ca0d41a6848d465f936a2b60f5f4e1ba925b441e9f6728aS3BucketAAA2CE8F"
+          },
+          "S3Key": {
+            "Fn::Join": [
+              "",
+              [
+                {
+                  "Fn::Select": [
+                    0,
+                    {
+                      "Fn::Split": [
+                        "||",
+                        {
+                          "Ref": "AssetParametersaacad069d2f055a63ca0d41a6848d465f936a2b60f5f4e1ba925b441e9f6728aS3VersionKeyF3ED2B69"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "Fn::Select": [
+                    1,
+                    {
+                      "Fn::Split": [
+                        "||",
+                        {
+                          "Ref": "AssetParametersaacad069d2f055a63ca0d41a6848d465f936a2b60f5f4e1ba925b441e9f6728aS3VersionKeyF3ED2B69"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            ]
+          }
+        },
+        "Handler": "widgets.main",
+        "Role": {
+          "Fn::GetAtt": [
+            "WidgetsServiceWidgetHandlerServiceRole2E493D62",
+            "Arn"
+          ]
+        },
+        "Runtime": "nodejs10.x",
+        "Environment": {
+          "Variables": {
+            "BUCKET": {
+              "Ref": "WidgetsServiceWidgetStoreFD4B0C0E"
+            }
+          }
+        },
+        "Tags": [
+          {
+            "Key": "custID",
+            "Value": {
+              "Ref": "custId"
+            }
+          }
+        ]
+      },
+      "DependsOn": [
+        "WidgetsServiceWidgetHandlerServiceRoleDefaultPolicy17612986",
+        "WidgetsServiceWidgetHandlerServiceRole2E493D62"
+      ],
+      "Metadata": {
+        "aws:cdk:path": "my-widget-service/WidgetsService/WidgetHandler/Resource",
+        "aws:asset:path": "asset.aacad069d2f055a63ca0d41a6848d465f936a2b60f5f4e1ba925b441e9f6728a",
+        "aws:asset:property": "Code"
+      }
+    },
+    "WidgetsServicewidgetsapiD2C155A7": {
+      "Type": "AWS::ApiGateway::RestApi",
+      "Properties": {
+        "Description": "This service serves widgets.",
+        "Name": "Widget Service",
+        "Tags": [
+          {
+            "Key": "custID",
+            "Value": {
+              "Ref": "custId"
+            }
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "my-widget-service/WidgetsService/widgets-api/Resource"
+      }
+    },
+    "WidgetsServicewidgetsapiCloudWatchRole2A333228": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "apigateway.amazonaws.com"
+              }
+            }
+          ],
+          "Version": "2012-10-17"
+        },
+        "ManagedPolicyArns": [
+          {
+            "Fn::Join": [
+              "",
+              [
+                "arn:",
+                {
+                  "Ref": "AWS::Partition"
+                },
+                ":iam::aws:policy/service-role/AmazonAPIGatewayPushToCloudWatchLogs"
+              ]
+            ]
+          }
+        ],
+        "Tags": [
+          {
+            "Key": "custID",
+            "Value": {
+              "Ref": "custId"
+            }
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "my-widget-service/WidgetsService/widgets-api/CloudWatchRole/Resource"
+      }
+    },
+    "WidgetsServicewidgetsapiAccount3406D660": {
+      "Type": "AWS::ApiGateway::Account",
+      "Properties": {
+        "CloudWatchRoleArn": {
+          "Fn::GetAtt": [
+            "WidgetsServicewidgetsapiCloudWatchRole2A333228",
+            "Arn"
+          ]
+        }
+      },
+      "DependsOn": [
+        "WidgetsServicewidgetsapiD2C155A7"
+      ],
+      "Metadata": {
+        "aws:cdk:path": "my-widget-service/WidgetsService/widgets-api/Account"
+      }
+    },
+    "WidgetsServicewidgetsapiDeployment8FE8638851a1e8ab1a2970a5378784279db7a5e6": {
+      "Type": "AWS::ApiGateway::Deployment",
+      "Properties": {
+        "RestApiId": {
+          "Ref": "WidgetsServicewidgetsapiD2C155A7"
+        },
+        "Description": "Automatically created by the RestApi construct"
+      },
+      "DependsOn": [
+        "WidgetsServicewidgetsapiidDELETEC0222503",
+        "WidgetsServicewidgetsapiidGETF614F954",
+        "WidgetsServicewidgetsapiidPOST65DE9A3B",
+        "WidgetsServicewidgetsapiid3B0AD4A5",
+        "WidgetsServicewidgetsapiGET13AECC05"
+      ],
+      "Metadata": {
+        "aws:cdk:path": "my-widget-service/WidgetsService/widgets-api/Deployment/Resource"
+      }
+    },
+    "WidgetsServicewidgetsapiDeploymentStageprod0A8F735E": {
+      "Type": "AWS::ApiGateway::Stage",
+      "Properties": {
+        "RestApiId": {
+          "Ref": "WidgetsServicewidgetsapiD2C155A7"
+        },
+        "DeploymentId": {
+          "Ref": "WidgetsServicewidgetsapiDeployment8FE8638851a1e8ab1a2970a5378784279db7a5e6"
+        },
+        "StageName": "prod",
+        "Tags": [
+          {
+            "Key": "custID",
+            "Value": {
+              "Ref": "custId"
+            }
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "my-widget-service/WidgetsService/widgets-api/DeploymentStage.prod/Resource"
+      }
+    },
+    "WidgetsServicewidgetsapiGETApiPermissionmywidgetserviceWidgetsServicewidgetsapi3FF317EAGETFFF62C84": {
+      "Type": "AWS::Lambda::Permission",
+      "Properties": {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "WidgetsServiceWidgetHandler95C207D7",
+            "Arn"
+          ]
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": {
+          "Fn::Join": [
+            "",
+            [
+              "arn:",
+              {
+                "Ref": "AWS::Partition"
+              },
+              ":execute-api:us-east-2:610880146692:",
+              {
+                "Ref": "WidgetsServicewidgetsapiD2C155A7"
+              },
+              "/",
+              {
+                "Ref": "WidgetsServicewidgetsapiDeploymentStageprod0A8F735E"
+              },
+              "/GET/"
+            ]
+          ]
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "my-widget-service/WidgetsService/widgets-api/Default/GET/ApiPermission.mywidgetserviceWidgetsServicewidgetsapi3FF317EA.GET.."
+      }
+    },
+    "WidgetsServicewidgetsapiGETApiPermissionTestmywidgetserviceWidgetsServicewidgetsapi3FF317EAGETB56290BE": {
+      "Type": "AWS::Lambda::Permission",
+      "Properties": {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "WidgetsServiceWidgetHandler95C207D7",
+            "Arn"
+          ]
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": {
+          "Fn::Join": [
+            "",
+            [
+              "arn:",
+              {
+                "Ref": "AWS::Partition"
+              },
+              ":execute-api:us-east-2:610880146692:",
+              {
+                "Ref": "WidgetsServicewidgetsapiD2C155A7"
+              },
+              "/test-invoke-stage/GET/"
+            ]
+          ]
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "my-widget-service/WidgetsService/widgets-api/Default/GET/ApiPermission.Test.mywidgetserviceWidgetsServicewidgetsapi3FF317EA.GET.."
+      }
+    },
+    "WidgetsServicewidgetsapiGET13AECC05": {
+      "Type": "AWS::ApiGateway::Method",
+      "Properties": {
+        "HttpMethod": "GET",
+        "ResourceId": {
+          "Fn::GetAtt": [
+            "WidgetsServicewidgetsapiD2C155A7",
+            "RootResourceId"
+          ]
+        },
+        "RestApiId": {
+          "Ref": "WidgetsServicewidgetsapiD2C155A7"
+        },
+        "AuthorizationType": "NONE",
+        "Integration": {
+          "IntegrationHttpMethod": "POST",
+          "RequestTemplates": {
+            "application/json": "{ \"statusCode\": \"200\" }"
+          },
+          "Type": "AWS_PROXY",
+          "Uri": {
+            "Fn::Join": [
+              "",
+              [
+                "arn:",
+                {
+                  "Ref": "AWS::Partition"
+                },
+                ":apigateway:us-east-2:lambda:path/2015-03-31/functions/",
+                {
+                  "Fn::GetAtt": [
+                    "WidgetsServiceWidgetHandler95C207D7",
+                    "Arn"
+                  ]
+                },
+                "/invocations"
+              ]
+            ]
+          }
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "my-widget-service/WidgetsService/widgets-api/Default/GET/Resource"
+      }
+    },
+    "WidgetsServicewidgetsapiid3B0AD4A5": {
+      "Type": "AWS::ApiGateway::Resource",
+      "Properties": {
+        "ParentId": {
+          "Fn::GetAtt": [
+            "WidgetsServicewidgetsapiD2C155A7",
+            "RootResourceId"
+          ]
+        },
+        "PathPart": "{id}",
+        "RestApiId": {
+          "Ref": "WidgetsServicewidgetsapiD2C155A7"
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "my-widget-service/WidgetsService/widgets-api/Default/{id}/Resource"
+      }
+    },
+    "WidgetsServicewidgetsapiidPOSTApiPermissionmywidgetserviceWidgetsServicewidgetsapi3FF317EAPOSTidBB2AA7ED": {
+      "Type": "AWS::Lambda::Permission",
+      "Properties": {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "WidgetsServiceWidgetHandler95C207D7",
+            "Arn"
+          ]
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": {
+          "Fn::Join": [
+            "",
+            [
+              "arn:",
+              {
+                "Ref": "AWS::Partition"
+              },
+              ":execute-api:us-east-2:610880146692:",
+              {
+                "Ref": "WidgetsServicewidgetsapiD2C155A7"
+              },
+              "/",
+              {
+                "Ref": "WidgetsServicewidgetsapiDeploymentStageprod0A8F735E"
+              },
+              "/POST/*"
+            ]
+          ]
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "my-widget-service/WidgetsService/widgets-api/Default/{id}/POST/ApiPermission.mywidgetserviceWidgetsServicewidgetsapi3FF317EA.POST..{id}"
+      }
+    },
+    "WidgetsServicewidgetsapiidPOSTApiPermissionTestmywidgetserviceWidgetsServicewidgetsapi3FF317EAPOSTid4C96FF02": {
+      "Type": "AWS::Lambda::Permission",
+      "Properties": {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "WidgetsServiceWidgetHandler95C207D7",
+            "Arn"
+          ]
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": {
+          "Fn::Join": [
+            "",
+            [
+              "arn:",
+              {
+                "Ref": "AWS::Partition"
+              },
+              ":execute-api:us-east-2:610880146692:",
+              {
+                "Ref": "WidgetsServicewidgetsapiD2C155A7"
+              },
+              "/test-invoke-stage/POST/*"
+            ]
+          ]
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "my-widget-service/WidgetsService/widgets-api/Default/{id}/POST/ApiPermission.Test.mywidgetserviceWidgetsServicewidgetsapi3FF317EA.POST..{id}"
+      }
+    },
+    "WidgetsServicewidgetsapiidPOST65DE9A3B": {
+      "Type": "AWS::ApiGateway::Method",
+      "Properties": {
+        "HttpMethod": "POST",
+        "ResourceId": {
+          "Ref": "WidgetsServicewidgetsapiid3B0AD4A5"
+        },
+        "RestApiId": {
+          "Ref": "WidgetsServicewidgetsapiD2C155A7"
+        },
+        "AuthorizationType": "NONE",
+        "Integration": {
+          "IntegrationHttpMethod": "POST",
+          "Type": "AWS_PROXY",
+          "Uri": {
+            "Fn::Join": [
+              "",
+              [
+                "arn:",
+                {
+                  "Ref": "AWS::Partition"
+                },
+                ":apigateway:us-east-2:lambda:path/2015-03-31/functions/",
+                {
+                  "Fn::GetAtt": [
+                    "WidgetsServiceWidgetHandler95C207D7",
+                    "Arn"
+                  ]
+                },
+                "/invocations"
+              ]
+            ]
+          }
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "my-widget-service/WidgetsService/widgets-api/Default/{id}/POST/Resource"
+      }
+    },
+    "WidgetsServicewidgetsapiidGETApiPermissionmywidgetserviceWidgetsServicewidgetsapi3FF317EAGETid81BC6A60": {
+      "Type": "AWS::Lambda::Permission",
+      "Properties": {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "WidgetsServiceWidgetHandler95C207D7",
+            "Arn"
+          ]
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": {
+          "Fn::Join": [
+            "",
+            [
+              "arn:",
+              {
+                "Ref": "AWS::Partition"
+              },
+              ":execute-api:us-east-2:610880146692:",
+              {
+                "Ref": "WidgetsServicewidgetsapiD2C155A7"
+              },
+              "/",
+              {
+                "Ref": "WidgetsServicewidgetsapiDeploymentStageprod0A8F735E"
+              },
+              "/GET/*"
+            ]
+          ]
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "my-widget-service/WidgetsService/widgets-api/Default/{id}/GET/ApiPermission.mywidgetserviceWidgetsServicewidgetsapi3FF317EA.GET..{id}"
+      }
+    },
+    "WidgetsServicewidgetsapiidGETApiPermissionTestmywidgetserviceWidgetsServicewidgetsapi3FF317EAGETid50F49BCE": {
+      "Type": "AWS::Lambda::Permission",
+      "Properties": {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "WidgetsServiceWidgetHandler95C207D7",
+            "Arn"
+          ]
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": {
+          "Fn::Join": [
+            "",
+            [
+              "arn:",
+              {
+                "Ref": "AWS::Partition"
+              },
+              ":execute-api:us-east-2:610880146692:",
+              {
+                "Ref": "WidgetsServicewidgetsapiD2C155A7"
+              },
+              "/test-invoke-stage/GET/*"
+            ]
+          ]
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "my-widget-service/WidgetsService/widgets-api/Default/{id}/GET/ApiPermission.Test.mywidgetserviceWidgetsServicewidgetsapi3FF317EA.GET..{id}"
+      }
+    },
+    "WidgetsServicewidgetsapiidGETF614F954": {
+      "Type": "AWS::ApiGateway::Method",
+      "Properties": {
+        "HttpMethod": "GET",
+        "ResourceId": {
+          "Ref": "WidgetsServicewidgetsapiid3B0AD4A5"
+        },
+        "RestApiId": {
+          "Ref": "WidgetsServicewidgetsapiD2C155A7"
+        },
+        "AuthorizationType": "NONE",
+        "Integration": {
+          "IntegrationHttpMethod": "POST",
+          "Type": "AWS_PROXY",
+          "Uri": {
+            "Fn::Join": [
+              "",
+              [
+                "arn:",
+                {
+                  "Ref": "AWS::Partition"
+                },
+                ":apigateway:us-east-2:lambda:path/2015-03-31/functions/",
+                {
+                  "Fn::GetAtt": [
+                    "WidgetsServiceWidgetHandler95C207D7",
+                    "Arn"
+                  ]
+                },
+                "/invocations"
+              ]
+            ]
+          }
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "my-widget-service/WidgetsService/widgets-api/Default/{id}/GET/Resource"
+      }
+    },
+    "WidgetsServicewidgetsapiidDELETEApiPermissionmywidgetserviceWidgetsServicewidgetsapi3FF317EADELETEid9BFCA8AB": {
+      "Type": "AWS::Lambda::Permission",
+      "Properties": {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "WidgetsServiceWidgetHandler95C207D7",
+            "Arn"
+          ]
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": {
+          "Fn::Join": [
+            "",
+            [
+              "arn:",
+              {
+                "Ref": "AWS::Partition"
+              },
+              ":execute-api:us-east-2:610880146692:",
+              {
+                "Ref": "WidgetsServicewidgetsapiD2C155A7"
+              },
+              "/",
+              {
+                "Ref": "WidgetsServicewidgetsapiDeploymentStageprod0A8F735E"
+              },
+              "/DELETE/*"
+            ]
+          ]
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "my-widget-service/WidgetsService/widgets-api/Default/{id}/DELETE/ApiPermission.mywidgetserviceWidgetsServicewidgetsapi3FF317EA.DELETE..{id}"
+      }
+    },
+    "WidgetsServicewidgetsapiidDELETEApiPermissionTestmywidgetserviceWidgetsServicewidgetsapi3FF317EADELETEid79D3F11F": {
+      "Type": "AWS::Lambda::Permission",
+      "Properties": {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "WidgetsServiceWidgetHandler95C207D7",
+            "Arn"
+          ]
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": {
+          "Fn::Join": [
+            "",
+            [
+              "arn:",
+              {
+                "Ref": "AWS::Partition"
+              },
+              ":execute-api:us-east-2:610880146692:",
+              {
+                "Ref": "WidgetsServicewidgetsapiD2C155A7"
+              },
+              "/test-invoke-stage/DELETE/*"
+            ]
+          ]
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "my-widget-service/WidgetsService/widgets-api/Default/{id}/DELETE/ApiPermission.Test.mywidgetserviceWidgetsServicewidgetsapi3FF317EA.DELETE..{id}"
+      }
+    },
+    "WidgetsServicewidgetsapiidDELETEC0222503": {
+      "Type": "AWS::ApiGateway::Method",
+      "Properties": {
+        "HttpMethod": "DELETE",
+        "ResourceId": {
+          "Ref": "WidgetsServicewidgetsapiid3B0AD4A5"
+        },
+        "RestApiId": {
+          "Ref": "WidgetsServicewidgetsapiD2C155A7"
+        },
+        "AuthorizationType": "NONE",
+        "Integration": {
+          "IntegrationHttpMethod": "POST",
+          "Type": "AWS_PROXY",
+          "Uri": {
+            "Fn::Join": [
+              "",
+              [
+                "arn:",
+                {
+                  "Ref": "AWS::Partition"
+                },
+                ":apigateway:us-east-2:lambda:path/2015-03-31/functions/",
+                {
+                  "Fn::GetAtt": [
+                    "WidgetsServiceWidgetHandler95C207D7",
+                    "Arn"
+                  ]
+                },
+                "/invocations"
+              ]
+            ]
+          }
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "my-widget-service/WidgetsService/widgets-api/Default/{id}/DELETE/Resource"
+      }
+    },
+    "CDKMetadata": {
+      "Type": "AWS::CDK::Metadata",
+      "Properties": {
+        "Modules": "aws-cdk=1.73.0,@aws-cdk/assets=1.78.0,@aws-cdk/aws-apigateway=1.78.0,@aws-cdk/aws-applicationautoscaling=1.78.0,@aws-cdk/aws-autoscaling-common=1.78.0,@aws-cdk/aws-certificatemanager=1.78.0,@aws-cdk/aws-cloudwatch=1.78.0,@aws-cdk/aws-codeguruprofiler=1.78.0,@aws-cdk/aws-ec2=1.78.0,@aws-cdk/aws-ecr=1.78.0,@aws-cdk/aws-ecr-assets=1.78.0,@aws-cdk/aws-efs=1.78.0,@aws-cdk/aws-elasticloadbalancingv2=1.78.0,@aws-cdk/aws-events=1.78.0,@aws-cdk/aws-iam=1.78.0,@aws-cdk/aws-kms=1.78.0,@aws-cdk/aws-lambda=1.78.0,@aws-cdk/aws-logs=1.78.0,@aws-cdk/aws-rds=1.78.0,@aws-cdk/aws-route53=1.78.0,@aws-cdk/aws-s3=1.78.0,@aws-cdk/aws-s3-assets=1.78.0,@aws-cdk/aws-sam=1.78.0,@aws-cdk/aws-secretsmanager=1.78.0,@aws-cdk/aws-sqs=1.78.0,@aws-cdk/aws-ssm=1.78.0,@aws-cdk/cloud-assembly-schema=1.78.0,@aws-cdk/core=1.78.0,@aws-cdk/cx-api=1.78.0,@aws-cdk/region-info=1.78.0,jsii-runtime=Python/3.9.0"
+      },
+      "Metadata": {
+        "aws:cdk:path": "my-widget-service/CDKMetadata/Default"
+      }
+    }
+  },
+  "Outputs": {
+    "WidgetsServicewidgetsapiEndpoint05D80629": {
+      "Value": {
+        "Fn::Join": [
+          "",
+          [
+            "https://",
+            {
+              "Ref": "WidgetsServicewidgetsapiD2C155A7"
+            },
+            ".execute-api.us-east-2.",
+            {
+              "Ref": "AWS::URLSuffix"
+            },
+            "/",
+            {
+              "Ref": "WidgetsServicewidgetsapiDeploymentStageprod0A8F735E"
+            },
+            "/"
+          ]
+        ]
+      }
+    }
+  }
+}

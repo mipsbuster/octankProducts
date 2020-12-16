@@ -1,0 +1,632 @@
+{
+  "Resources": {
+    "VPCOctankCustomers6B5A1E2B": {
+      "Type": "AWS::EC2::VPC",
+      "Properties": {
+        "CidrBlock": "10.0.0.0/16",
+        "EnableDnsHostnames": true,
+        "EnableDnsSupport": true,
+        "InstanceTenancy": "default",
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "core/VPC-Octank-Customers"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "core/VPC-Octank-Customers/Resource"
+      }
+    },
+    "VPCOctankCustomersPublicSubnet1SubnetB5A63D2C": {
+      "Type": "AWS::EC2::Subnet",
+      "Properties": {
+        "CidrBlock": "10.0.0.0/19",
+        "VpcId": {
+          "Ref": "VPCOctankCustomers6B5A1E2B"
+        },
+        "AvailabilityZone": "us-east-2a",
+        "MapPublicIpOnLaunch": true,
+        "Tags": [
+          {
+            "Key": "aws-cdk:subnet-name",
+            "Value": "Public"
+          },
+          {
+            "Key": "aws-cdk:subnet-type",
+            "Value": "Public"
+          },
+          {
+            "Key": "Name",
+            "Value": "core/VPC-Octank-Customers/PublicSubnet1"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "core/VPC-Octank-Customers/PublicSubnet1/Subnet"
+      }
+    },
+    "VPCOctankCustomersPublicSubnet1RouteTableB651FEF7": {
+      "Type": "AWS::EC2::RouteTable",
+      "Properties": {
+        "VpcId": {
+          "Ref": "VPCOctankCustomers6B5A1E2B"
+        },
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "core/VPC-Octank-Customers/PublicSubnet1"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "core/VPC-Octank-Customers/PublicSubnet1/RouteTable"
+      }
+    },
+    "VPCOctankCustomersPublicSubnet1RouteTableAssociationD6588957": {
+      "Type": "AWS::EC2::SubnetRouteTableAssociation",
+      "Properties": {
+        "RouteTableId": {
+          "Ref": "VPCOctankCustomersPublicSubnet1RouteTableB651FEF7"
+        },
+        "SubnetId": {
+          "Ref": "VPCOctankCustomersPublicSubnet1SubnetB5A63D2C"
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "core/VPC-Octank-Customers/PublicSubnet1/RouteTableAssociation"
+      }
+    },
+    "VPCOctankCustomersPublicSubnet1DefaultRouteF0FCA659": {
+      "Type": "AWS::EC2::Route",
+      "Properties": {
+        "RouteTableId": {
+          "Ref": "VPCOctankCustomersPublicSubnet1RouteTableB651FEF7"
+        },
+        "DestinationCidrBlock": "0.0.0.0/0",
+        "GatewayId": {
+          "Ref": "VPCOctankCustomersIGW93EBA324"
+        }
+      },
+      "DependsOn": [
+        "VPCOctankCustomersVPCGW724D72D0"
+      ],
+      "Metadata": {
+        "aws:cdk:path": "core/VPC-Octank-Customers/PublicSubnet1/DefaultRoute"
+      }
+    },
+    "VPCOctankCustomersPublicSubnet1EIP6BBA0D1F": {
+      "Type": "AWS::EC2::EIP",
+      "Properties": {
+        "Domain": "vpc",
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "core/VPC-Octank-Customers/PublicSubnet1"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "core/VPC-Octank-Customers/PublicSubnet1/EIP"
+      }
+    },
+    "VPCOctankCustomersPublicSubnet1NATGateway2EB0E94B": {
+      "Type": "AWS::EC2::NatGateway",
+      "Properties": {
+        "AllocationId": {
+          "Fn::GetAtt": [
+            "VPCOctankCustomersPublicSubnet1EIP6BBA0D1F",
+            "AllocationId"
+          ]
+        },
+        "SubnetId": {
+          "Ref": "VPCOctankCustomersPublicSubnet1SubnetB5A63D2C"
+        },
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "core/VPC-Octank-Customers/PublicSubnet1"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "core/VPC-Octank-Customers/PublicSubnet1/NATGateway"
+      }
+    },
+    "VPCOctankCustomersPublicSubnet2Subnet0FD94B73": {
+      "Type": "AWS::EC2::Subnet",
+      "Properties": {
+        "CidrBlock": "10.0.32.0/19",
+        "VpcId": {
+          "Ref": "VPCOctankCustomers6B5A1E2B"
+        },
+        "AvailabilityZone": "us-east-2b",
+        "MapPublicIpOnLaunch": true,
+        "Tags": [
+          {
+            "Key": "aws-cdk:subnet-name",
+            "Value": "Public"
+          },
+          {
+            "Key": "aws-cdk:subnet-type",
+            "Value": "Public"
+          },
+          {
+            "Key": "Name",
+            "Value": "core/VPC-Octank-Customers/PublicSubnet2"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "core/VPC-Octank-Customers/PublicSubnet2/Subnet"
+      }
+    },
+    "VPCOctankCustomersPublicSubnet2RouteTable4231E5DD": {
+      "Type": "AWS::EC2::RouteTable",
+      "Properties": {
+        "VpcId": {
+          "Ref": "VPCOctankCustomers6B5A1E2B"
+        },
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "core/VPC-Octank-Customers/PublicSubnet2"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "core/VPC-Octank-Customers/PublicSubnet2/RouteTable"
+      }
+    },
+    "VPCOctankCustomersPublicSubnet2RouteTableAssociation0D2C0BC5": {
+      "Type": "AWS::EC2::SubnetRouteTableAssociation",
+      "Properties": {
+        "RouteTableId": {
+          "Ref": "VPCOctankCustomersPublicSubnet2RouteTable4231E5DD"
+        },
+        "SubnetId": {
+          "Ref": "VPCOctankCustomersPublicSubnet2Subnet0FD94B73"
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "core/VPC-Octank-Customers/PublicSubnet2/RouteTableAssociation"
+      }
+    },
+    "VPCOctankCustomersPublicSubnet2DefaultRouteF6F0E674": {
+      "Type": "AWS::EC2::Route",
+      "Properties": {
+        "RouteTableId": {
+          "Ref": "VPCOctankCustomersPublicSubnet2RouteTable4231E5DD"
+        },
+        "DestinationCidrBlock": "0.0.0.0/0",
+        "GatewayId": {
+          "Ref": "VPCOctankCustomersIGW93EBA324"
+        }
+      },
+      "DependsOn": [
+        "VPCOctankCustomersVPCGW724D72D0"
+      ],
+      "Metadata": {
+        "aws:cdk:path": "core/VPC-Octank-Customers/PublicSubnet2/DefaultRoute"
+      }
+    },
+    "VPCOctankCustomersPublicSubnet2EIPE4CFA89F": {
+      "Type": "AWS::EC2::EIP",
+      "Properties": {
+        "Domain": "vpc",
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "core/VPC-Octank-Customers/PublicSubnet2"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "core/VPC-Octank-Customers/PublicSubnet2/EIP"
+      }
+    },
+    "VPCOctankCustomersPublicSubnet2NATGateway6AA9471F": {
+      "Type": "AWS::EC2::NatGateway",
+      "Properties": {
+        "AllocationId": {
+          "Fn::GetAtt": [
+            "VPCOctankCustomersPublicSubnet2EIPE4CFA89F",
+            "AllocationId"
+          ]
+        },
+        "SubnetId": {
+          "Ref": "VPCOctankCustomersPublicSubnet2Subnet0FD94B73"
+        },
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "core/VPC-Octank-Customers/PublicSubnet2"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "core/VPC-Octank-Customers/PublicSubnet2/NATGateway"
+      }
+    },
+    "VPCOctankCustomersPublicSubnet3Subnet09A5AD97": {
+      "Type": "AWS::EC2::Subnet",
+      "Properties": {
+        "CidrBlock": "10.0.64.0/19",
+        "VpcId": {
+          "Ref": "VPCOctankCustomers6B5A1E2B"
+        },
+        "AvailabilityZone": "us-east-2c",
+        "MapPublicIpOnLaunch": true,
+        "Tags": [
+          {
+            "Key": "aws-cdk:subnet-name",
+            "Value": "Public"
+          },
+          {
+            "Key": "aws-cdk:subnet-type",
+            "Value": "Public"
+          },
+          {
+            "Key": "Name",
+            "Value": "core/VPC-Octank-Customers/PublicSubnet3"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "core/VPC-Octank-Customers/PublicSubnet3/Subnet"
+      }
+    },
+    "VPCOctankCustomersPublicSubnet3RouteTableC579C6C8": {
+      "Type": "AWS::EC2::RouteTable",
+      "Properties": {
+        "VpcId": {
+          "Ref": "VPCOctankCustomers6B5A1E2B"
+        },
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "core/VPC-Octank-Customers/PublicSubnet3"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "core/VPC-Octank-Customers/PublicSubnet3/RouteTable"
+      }
+    },
+    "VPCOctankCustomersPublicSubnet3RouteTableAssociation3D91A6E3": {
+      "Type": "AWS::EC2::SubnetRouteTableAssociation",
+      "Properties": {
+        "RouteTableId": {
+          "Ref": "VPCOctankCustomersPublicSubnet3RouteTableC579C6C8"
+        },
+        "SubnetId": {
+          "Ref": "VPCOctankCustomersPublicSubnet3Subnet09A5AD97"
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "core/VPC-Octank-Customers/PublicSubnet3/RouteTableAssociation"
+      }
+    },
+    "VPCOctankCustomersPublicSubnet3DefaultRoute87B90027": {
+      "Type": "AWS::EC2::Route",
+      "Properties": {
+        "RouteTableId": {
+          "Ref": "VPCOctankCustomersPublicSubnet3RouteTableC579C6C8"
+        },
+        "DestinationCidrBlock": "0.0.0.0/0",
+        "GatewayId": {
+          "Ref": "VPCOctankCustomersIGW93EBA324"
+        }
+      },
+      "DependsOn": [
+        "VPCOctankCustomersVPCGW724D72D0"
+      ],
+      "Metadata": {
+        "aws:cdk:path": "core/VPC-Octank-Customers/PublicSubnet3/DefaultRoute"
+      }
+    },
+    "VPCOctankCustomersPublicSubnet3EIPF76579D9": {
+      "Type": "AWS::EC2::EIP",
+      "Properties": {
+        "Domain": "vpc",
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "core/VPC-Octank-Customers/PublicSubnet3"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "core/VPC-Octank-Customers/PublicSubnet3/EIP"
+      }
+    },
+    "VPCOctankCustomersPublicSubnet3NATGatewayC14DA5B8": {
+      "Type": "AWS::EC2::NatGateway",
+      "Properties": {
+        "AllocationId": {
+          "Fn::GetAtt": [
+            "VPCOctankCustomersPublicSubnet3EIPF76579D9",
+            "AllocationId"
+          ]
+        },
+        "SubnetId": {
+          "Ref": "VPCOctankCustomersPublicSubnet3Subnet09A5AD97"
+        },
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "core/VPC-Octank-Customers/PublicSubnet3"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "core/VPC-Octank-Customers/PublicSubnet3/NATGateway"
+      }
+    },
+    "VPCOctankCustomersPrivateSubnet1Subnet354F933A": {
+      "Type": "AWS::EC2::Subnet",
+      "Properties": {
+        "CidrBlock": "10.0.96.0/19",
+        "VpcId": {
+          "Ref": "VPCOctankCustomers6B5A1E2B"
+        },
+        "AvailabilityZone": "us-east-2a",
+        "MapPublicIpOnLaunch": false,
+        "Tags": [
+          {
+            "Key": "aws-cdk:subnet-name",
+            "Value": "Private"
+          },
+          {
+            "Key": "aws-cdk:subnet-type",
+            "Value": "Private"
+          },
+          {
+            "Key": "Name",
+            "Value": "core/VPC-Octank-Customers/PrivateSubnet1"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "core/VPC-Octank-Customers/PrivateSubnet1/Subnet"
+      }
+    },
+    "VPCOctankCustomersPrivateSubnet1RouteTable9731DD1F": {
+      "Type": "AWS::EC2::RouteTable",
+      "Properties": {
+        "VpcId": {
+          "Ref": "VPCOctankCustomers6B5A1E2B"
+        },
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "core/VPC-Octank-Customers/PrivateSubnet1"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "core/VPC-Octank-Customers/PrivateSubnet1/RouteTable"
+      }
+    },
+    "VPCOctankCustomersPrivateSubnet1RouteTableAssociation2012D20D": {
+      "Type": "AWS::EC2::SubnetRouteTableAssociation",
+      "Properties": {
+        "RouteTableId": {
+          "Ref": "VPCOctankCustomersPrivateSubnet1RouteTable9731DD1F"
+        },
+        "SubnetId": {
+          "Ref": "VPCOctankCustomersPrivateSubnet1Subnet354F933A"
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "core/VPC-Octank-Customers/PrivateSubnet1/RouteTableAssociation"
+      }
+    },
+    "VPCOctankCustomersPrivateSubnet1DefaultRouteFE83ADBD": {
+      "Type": "AWS::EC2::Route",
+      "Properties": {
+        "RouteTableId": {
+          "Ref": "VPCOctankCustomersPrivateSubnet1RouteTable9731DD1F"
+        },
+        "DestinationCidrBlock": "0.0.0.0/0",
+        "NatGatewayId": {
+          "Ref": "VPCOctankCustomersPublicSubnet1NATGateway2EB0E94B"
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "core/VPC-Octank-Customers/PrivateSubnet1/DefaultRoute"
+      }
+    },
+    "VPCOctankCustomersPrivateSubnet2Subnet368A7D8D": {
+      "Type": "AWS::EC2::Subnet",
+      "Properties": {
+        "CidrBlock": "10.0.128.0/19",
+        "VpcId": {
+          "Ref": "VPCOctankCustomers6B5A1E2B"
+        },
+        "AvailabilityZone": "us-east-2b",
+        "MapPublicIpOnLaunch": false,
+        "Tags": [
+          {
+            "Key": "aws-cdk:subnet-name",
+            "Value": "Private"
+          },
+          {
+            "Key": "aws-cdk:subnet-type",
+            "Value": "Private"
+          },
+          {
+            "Key": "Name",
+            "Value": "core/VPC-Octank-Customers/PrivateSubnet2"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "core/VPC-Octank-Customers/PrivateSubnet2/Subnet"
+      }
+    },
+    "VPCOctankCustomersPrivateSubnet2RouteTable48B82599": {
+      "Type": "AWS::EC2::RouteTable",
+      "Properties": {
+        "VpcId": {
+          "Ref": "VPCOctankCustomers6B5A1E2B"
+        },
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "core/VPC-Octank-Customers/PrivateSubnet2"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "core/VPC-Octank-Customers/PrivateSubnet2/RouteTable"
+      }
+    },
+    "VPCOctankCustomersPrivateSubnet2RouteTableAssociation057B0B53": {
+      "Type": "AWS::EC2::SubnetRouteTableAssociation",
+      "Properties": {
+        "RouteTableId": {
+          "Ref": "VPCOctankCustomersPrivateSubnet2RouteTable48B82599"
+        },
+        "SubnetId": {
+          "Ref": "VPCOctankCustomersPrivateSubnet2Subnet368A7D8D"
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "core/VPC-Octank-Customers/PrivateSubnet2/RouteTableAssociation"
+      }
+    },
+    "VPCOctankCustomersPrivateSubnet2DefaultRoute73A2F75A": {
+      "Type": "AWS::EC2::Route",
+      "Properties": {
+        "RouteTableId": {
+          "Ref": "VPCOctankCustomersPrivateSubnet2RouteTable48B82599"
+        },
+        "DestinationCidrBlock": "0.0.0.0/0",
+        "NatGatewayId": {
+          "Ref": "VPCOctankCustomersPublicSubnet2NATGateway6AA9471F"
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "core/VPC-Octank-Customers/PrivateSubnet2/DefaultRoute"
+      }
+    },
+    "VPCOctankCustomersPrivateSubnet3Subnet2C12BDFC": {
+      "Type": "AWS::EC2::Subnet",
+      "Properties": {
+        "CidrBlock": "10.0.160.0/19",
+        "VpcId": {
+          "Ref": "VPCOctankCustomers6B5A1E2B"
+        },
+        "AvailabilityZone": "us-east-2c",
+        "MapPublicIpOnLaunch": false,
+        "Tags": [
+          {
+            "Key": "aws-cdk:subnet-name",
+            "Value": "Private"
+          },
+          {
+            "Key": "aws-cdk:subnet-type",
+            "Value": "Private"
+          },
+          {
+            "Key": "Name",
+            "Value": "core/VPC-Octank-Customers/PrivateSubnet3"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "core/VPC-Octank-Customers/PrivateSubnet3/Subnet"
+      }
+    },
+    "VPCOctankCustomersPrivateSubnet3RouteTableD8BB067E": {
+      "Type": "AWS::EC2::RouteTable",
+      "Properties": {
+        "VpcId": {
+          "Ref": "VPCOctankCustomers6B5A1E2B"
+        },
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "core/VPC-Octank-Customers/PrivateSubnet3"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "core/VPC-Octank-Customers/PrivateSubnet3/RouteTable"
+      }
+    },
+    "VPCOctankCustomersPrivateSubnet3RouteTableAssociationE194608B": {
+      "Type": "AWS::EC2::SubnetRouteTableAssociation",
+      "Properties": {
+        "RouteTableId": {
+          "Ref": "VPCOctankCustomersPrivateSubnet3RouteTableD8BB067E"
+        },
+        "SubnetId": {
+          "Ref": "VPCOctankCustomersPrivateSubnet3Subnet2C12BDFC"
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "core/VPC-Octank-Customers/PrivateSubnet3/RouteTableAssociation"
+      }
+    },
+    "VPCOctankCustomersPrivateSubnet3DefaultRoute69344385": {
+      "Type": "AWS::EC2::Route",
+      "Properties": {
+        "RouteTableId": {
+          "Ref": "VPCOctankCustomersPrivateSubnet3RouteTableD8BB067E"
+        },
+        "DestinationCidrBlock": "0.0.0.0/0",
+        "NatGatewayId": {
+          "Ref": "VPCOctankCustomersPublicSubnet3NATGatewayC14DA5B8"
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "core/VPC-Octank-Customers/PrivateSubnet3/DefaultRoute"
+      }
+    },
+    "VPCOctankCustomersIGW93EBA324": {
+      "Type": "AWS::EC2::InternetGateway",
+      "Properties": {
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": "core/VPC-Octank-Customers"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "core/VPC-Octank-Customers/IGW"
+      }
+    },
+    "VPCOctankCustomersVPCGW724D72D0": {
+      "Type": "AWS::EC2::VPCGatewayAttachment",
+      "Properties": {
+        "VpcId": {
+          "Ref": "VPCOctankCustomers6B5A1E2B"
+        },
+        "InternetGatewayId": {
+          "Ref": "VPCOctankCustomersIGW93EBA324"
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "core/VPC-Octank-Customers/VPCGW"
+      }
+    },
+    "CDKMetadata": {
+      "Type": "AWS::CDK::Metadata",
+      "Properties": {
+        "Modules": "aws-cdk=1.73.0,@aws-cdk/assets=1.78.0,@aws-cdk/aws-apigateway=1.78.0,@aws-cdk/aws-applicationautoscaling=1.78.0,@aws-cdk/aws-autoscaling-common=1.78.0,@aws-cdk/aws-certificatemanager=1.78.0,@aws-cdk/aws-cloudwatch=1.78.0,@aws-cdk/aws-codeguruprofiler=1.78.0,@aws-cdk/aws-ec2=1.78.0,@aws-cdk/aws-ecr=1.78.0,@aws-cdk/aws-ecr-assets=1.78.0,@aws-cdk/aws-efs=1.78.0,@aws-cdk/aws-elasticloadbalancingv2=1.78.0,@aws-cdk/aws-events=1.78.0,@aws-cdk/aws-iam=1.78.0,@aws-cdk/aws-kms=1.78.0,@aws-cdk/aws-lambda=1.78.0,@aws-cdk/aws-logs=1.78.0,@aws-cdk/aws-rds=1.78.0,@aws-cdk/aws-route53=1.78.0,@aws-cdk/aws-s3=1.78.0,@aws-cdk/aws-s3-assets=1.78.0,@aws-cdk/aws-sam=1.78.0,@aws-cdk/aws-secretsmanager=1.78.0,@aws-cdk/aws-sqs=1.78.0,@aws-cdk/aws-ssm=1.78.0,@aws-cdk/cloud-assembly-schema=1.78.0,@aws-cdk/core=1.78.0,@aws-cdk/cx-api=1.78.0,@aws-cdk/region-info=1.78.0,jsii-runtime=Python/3.9.0"
+      },
+      "Metadata": {
+        "aws:cdk:path": "core/CDKMetadata/Default"
+      }
+    }
+  },
+  "Parameters": {
+    "custId": {
+      "Type": "String",
+      "Description": "The id of the customer."
+    }
+  }
+}

@@ -1,0 +1,1351 @@
+{
+  "Parameters": {
+    "custId": {
+      "Type": "String",
+      "Description": "The id of the customer."
+    },
+    "AssetParametersaacad069d2f055a63ca0d41a6848d465f936a2b60f5f4e1ba925b441e9f6728aS3BucketAAA2CE8F": {
+      "Type": "String",
+      "Description": "S3 bucket for asset \"aacad069d2f055a63ca0d41a6848d465f936a2b60f5f4e1ba925b441e9f6728a\""
+    },
+    "AssetParametersaacad069d2f055a63ca0d41a6848d465f936a2b60f5f4e1ba925b441e9f6728aS3VersionKeyF3ED2B69": {
+      "Type": "String",
+      "Description": "S3 key for asset version \"aacad069d2f055a63ca0d41a6848d465f936a2b60f5f4e1ba925b441e9f6728a\""
+    },
+    "AssetParametersaacad069d2f055a63ca0d41a6848d465f936a2b60f5f4e1ba925b441e9f6728aArtifactHashEB48046E": {
+      "Type": "String",
+      "Description": "Artifact hash for asset \"aacad069d2f055a63ca0d41a6848d465f936a2b60f5f4e1ba925b441e9f6728a\""
+    }
+  },
+  "Resources": {
+    "DevServiceVPCOctankDEV7EF467BD": {
+      "Type": "AWS::EC2::VPC",
+      "Properties": {
+        "CidrBlock": "192.168.0.0/24",
+        "EnableDnsHostnames": true,
+        "EnableDnsSupport": true,
+        "InstanceTenancy": "default",
+        "Tags": [
+          {
+            "Key": "custID",
+            "Value": {
+              "Ref": "custId"
+            }
+          },
+          {
+            "Key": "Name",
+            "Value": "product-dev/DevService/VPC-Octank-DEV"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "product-dev/DevService/VPC-Octank-DEV/Resource"
+      }
+    },
+    "DevServiceVPCOctankDEVPublicSubnet1Subnet2F6DD072": {
+      "Type": "AWS::EC2::Subnet",
+      "Properties": {
+        "CidrBlock": "192.168.0.0/27",
+        "VpcId": {
+          "Ref": "DevServiceVPCOctankDEV7EF467BD"
+        },
+        "AvailabilityZone": "us-east-2a",
+        "MapPublicIpOnLaunch": true,
+        "Tags": [
+          {
+            "Key": "aws-cdk:subnet-name",
+            "Value": "Public"
+          },
+          {
+            "Key": "aws-cdk:subnet-type",
+            "Value": "Public"
+          },
+          {
+            "Key": "custID",
+            "Value": {
+              "Ref": "custId"
+            }
+          },
+          {
+            "Key": "Name",
+            "Value": "product-dev/DevService/VPC-Octank-DEV/PublicSubnet1"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "product-dev/DevService/VPC-Octank-DEV/PublicSubnet1/Subnet"
+      }
+    },
+    "DevServiceVPCOctankDEVPublicSubnet1RouteTable20E7D3E7": {
+      "Type": "AWS::EC2::RouteTable",
+      "Properties": {
+        "VpcId": {
+          "Ref": "DevServiceVPCOctankDEV7EF467BD"
+        },
+        "Tags": [
+          {
+            "Key": "custID",
+            "Value": {
+              "Ref": "custId"
+            }
+          },
+          {
+            "Key": "Name",
+            "Value": "product-dev/DevService/VPC-Octank-DEV/PublicSubnet1"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "product-dev/DevService/VPC-Octank-DEV/PublicSubnet1/RouteTable"
+      }
+    },
+    "DevServiceVPCOctankDEVPublicSubnet1RouteTableAssociation007AD6C6": {
+      "Type": "AWS::EC2::SubnetRouteTableAssociation",
+      "Properties": {
+        "RouteTableId": {
+          "Ref": "DevServiceVPCOctankDEVPublicSubnet1RouteTable20E7D3E7"
+        },
+        "SubnetId": {
+          "Ref": "DevServiceVPCOctankDEVPublicSubnet1Subnet2F6DD072"
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "product-dev/DevService/VPC-Octank-DEV/PublicSubnet1/RouteTableAssociation"
+      }
+    },
+    "DevServiceVPCOctankDEVPublicSubnet1DefaultRouteD602177B": {
+      "Type": "AWS::EC2::Route",
+      "Properties": {
+        "RouteTableId": {
+          "Ref": "DevServiceVPCOctankDEVPublicSubnet1RouteTable20E7D3E7"
+        },
+        "DestinationCidrBlock": "0.0.0.0/0",
+        "GatewayId": {
+          "Ref": "DevServiceVPCOctankDEVIGW2F354A97"
+        }
+      },
+      "DependsOn": [
+        "DevServiceVPCOctankDEVVPCGWF9EA77C3"
+      ],
+      "Metadata": {
+        "aws:cdk:path": "product-dev/DevService/VPC-Octank-DEV/PublicSubnet1/DefaultRoute"
+      }
+    },
+    "DevServiceVPCOctankDEVPublicSubnet2SubnetE8140528": {
+      "Type": "AWS::EC2::Subnet",
+      "Properties": {
+        "CidrBlock": "192.168.0.32/27",
+        "VpcId": {
+          "Ref": "DevServiceVPCOctankDEV7EF467BD"
+        },
+        "AvailabilityZone": "us-east-2b",
+        "MapPublicIpOnLaunch": true,
+        "Tags": [
+          {
+            "Key": "aws-cdk:subnet-name",
+            "Value": "Public"
+          },
+          {
+            "Key": "aws-cdk:subnet-type",
+            "Value": "Public"
+          },
+          {
+            "Key": "custID",
+            "Value": {
+              "Ref": "custId"
+            }
+          },
+          {
+            "Key": "Name",
+            "Value": "product-dev/DevService/VPC-Octank-DEV/PublicSubnet2"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "product-dev/DevService/VPC-Octank-DEV/PublicSubnet2/Subnet"
+      }
+    },
+    "DevServiceVPCOctankDEVPublicSubnet2RouteTableBB0A7062": {
+      "Type": "AWS::EC2::RouteTable",
+      "Properties": {
+        "VpcId": {
+          "Ref": "DevServiceVPCOctankDEV7EF467BD"
+        },
+        "Tags": [
+          {
+            "Key": "custID",
+            "Value": {
+              "Ref": "custId"
+            }
+          },
+          {
+            "Key": "Name",
+            "Value": "product-dev/DevService/VPC-Octank-DEV/PublicSubnet2"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "product-dev/DevService/VPC-Octank-DEV/PublicSubnet2/RouteTable"
+      }
+    },
+    "DevServiceVPCOctankDEVPublicSubnet2RouteTableAssociation804382BE": {
+      "Type": "AWS::EC2::SubnetRouteTableAssociation",
+      "Properties": {
+        "RouteTableId": {
+          "Ref": "DevServiceVPCOctankDEVPublicSubnet2RouteTableBB0A7062"
+        },
+        "SubnetId": {
+          "Ref": "DevServiceVPCOctankDEVPublicSubnet2SubnetE8140528"
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "product-dev/DevService/VPC-Octank-DEV/PublicSubnet2/RouteTableAssociation"
+      }
+    },
+    "DevServiceVPCOctankDEVPublicSubnet2DefaultRoute05E82892": {
+      "Type": "AWS::EC2::Route",
+      "Properties": {
+        "RouteTableId": {
+          "Ref": "DevServiceVPCOctankDEVPublicSubnet2RouteTableBB0A7062"
+        },
+        "DestinationCidrBlock": "0.0.0.0/0",
+        "GatewayId": {
+          "Ref": "DevServiceVPCOctankDEVIGW2F354A97"
+        }
+      },
+      "DependsOn": [
+        "DevServiceVPCOctankDEVVPCGWF9EA77C3"
+      ],
+      "Metadata": {
+        "aws:cdk:path": "product-dev/DevService/VPC-Octank-DEV/PublicSubnet2/DefaultRoute"
+      }
+    },
+    "DevServiceVPCOctankDEVPublicSubnet3Subnet3281C82D": {
+      "Type": "AWS::EC2::Subnet",
+      "Properties": {
+        "CidrBlock": "192.168.0.64/27",
+        "VpcId": {
+          "Ref": "DevServiceVPCOctankDEV7EF467BD"
+        },
+        "AvailabilityZone": "us-east-2c",
+        "MapPublicIpOnLaunch": true,
+        "Tags": [
+          {
+            "Key": "aws-cdk:subnet-name",
+            "Value": "Public"
+          },
+          {
+            "Key": "aws-cdk:subnet-type",
+            "Value": "Public"
+          },
+          {
+            "Key": "custID",
+            "Value": {
+              "Ref": "custId"
+            }
+          },
+          {
+            "Key": "Name",
+            "Value": "product-dev/DevService/VPC-Octank-DEV/PublicSubnet3"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "product-dev/DevService/VPC-Octank-DEV/PublicSubnet3/Subnet"
+      }
+    },
+    "DevServiceVPCOctankDEVPublicSubnet3RouteTableE7D23866": {
+      "Type": "AWS::EC2::RouteTable",
+      "Properties": {
+        "VpcId": {
+          "Ref": "DevServiceVPCOctankDEV7EF467BD"
+        },
+        "Tags": [
+          {
+            "Key": "custID",
+            "Value": {
+              "Ref": "custId"
+            }
+          },
+          {
+            "Key": "Name",
+            "Value": "product-dev/DevService/VPC-Octank-DEV/PublicSubnet3"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "product-dev/DevService/VPC-Octank-DEV/PublicSubnet3/RouteTable"
+      }
+    },
+    "DevServiceVPCOctankDEVPublicSubnet3RouteTableAssociation3390137D": {
+      "Type": "AWS::EC2::SubnetRouteTableAssociation",
+      "Properties": {
+        "RouteTableId": {
+          "Ref": "DevServiceVPCOctankDEVPublicSubnet3RouteTableE7D23866"
+        },
+        "SubnetId": {
+          "Ref": "DevServiceVPCOctankDEVPublicSubnet3Subnet3281C82D"
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "product-dev/DevService/VPC-Octank-DEV/PublicSubnet3/RouteTableAssociation"
+      }
+    },
+    "DevServiceVPCOctankDEVPublicSubnet3DefaultRoute65742D3B": {
+      "Type": "AWS::EC2::Route",
+      "Properties": {
+        "RouteTableId": {
+          "Ref": "DevServiceVPCOctankDEVPublicSubnet3RouteTableE7D23866"
+        },
+        "DestinationCidrBlock": "0.0.0.0/0",
+        "GatewayId": {
+          "Ref": "DevServiceVPCOctankDEVIGW2F354A97"
+        }
+      },
+      "DependsOn": [
+        "DevServiceVPCOctankDEVVPCGWF9EA77C3"
+      ],
+      "Metadata": {
+        "aws:cdk:path": "product-dev/DevService/VPC-Octank-DEV/PublicSubnet3/DefaultRoute"
+      }
+    },
+    "DevServiceVPCOctankDEVIsolatedSubnet1Subnet0E557CCF": {
+      "Type": "AWS::EC2::Subnet",
+      "Properties": {
+        "CidrBlock": "192.168.0.96/27",
+        "VpcId": {
+          "Ref": "DevServiceVPCOctankDEV7EF467BD"
+        },
+        "AvailabilityZone": "us-east-2a",
+        "MapPublicIpOnLaunch": false,
+        "Tags": [
+          {
+            "Key": "aws-cdk:subnet-name",
+            "Value": "Isolated"
+          },
+          {
+            "Key": "aws-cdk:subnet-type",
+            "Value": "Isolated"
+          },
+          {
+            "Key": "custID",
+            "Value": {
+              "Ref": "custId"
+            }
+          },
+          {
+            "Key": "Name",
+            "Value": "product-dev/DevService/VPC-Octank-DEV/IsolatedSubnet1"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "product-dev/DevService/VPC-Octank-DEV/IsolatedSubnet1/Subnet"
+      }
+    },
+    "DevServiceVPCOctankDEVIsolatedSubnet1RouteTable3B743BD5": {
+      "Type": "AWS::EC2::RouteTable",
+      "Properties": {
+        "VpcId": {
+          "Ref": "DevServiceVPCOctankDEV7EF467BD"
+        },
+        "Tags": [
+          {
+            "Key": "custID",
+            "Value": {
+              "Ref": "custId"
+            }
+          },
+          {
+            "Key": "Name",
+            "Value": "product-dev/DevService/VPC-Octank-DEV/IsolatedSubnet1"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "product-dev/DevService/VPC-Octank-DEV/IsolatedSubnet1/RouteTable"
+      }
+    },
+    "DevServiceVPCOctankDEVIsolatedSubnet1RouteTableAssociation73131130": {
+      "Type": "AWS::EC2::SubnetRouteTableAssociation",
+      "Properties": {
+        "RouteTableId": {
+          "Ref": "DevServiceVPCOctankDEVIsolatedSubnet1RouteTable3B743BD5"
+        },
+        "SubnetId": {
+          "Ref": "DevServiceVPCOctankDEVIsolatedSubnet1Subnet0E557CCF"
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "product-dev/DevService/VPC-Octank-DEV/IsolatedSubnet1/RouteTableAssociation"
+      }
+    },
+    "DevServiceVPCOctankDEVIsolatedSubnet2Subnet0EA86E55": {
+      "Type": "AWS::EC2::Subnet",
+      "Properties": {
+        "CidrBlock": "192.168.0.128/27",
+        "VpcId": {
+          "Ref": "DevServiceVPCOctankDEV7EF467BD"
+        },
+        "AvailabilityZone": "us-east-2b",
+        "MapPublicIpOnLaunch": false,
+        "Tags": [
+          {
+            "Key": "aws-cdk:subnet-name",
+            "Value": "Isolated"
+          },
+          {
+            "Key": "aws-cdk:subnet-type",
+            "Value": "Isolated"
+          },
+          {
+            "Key": "custID",
+            "Value": {
+              "Ref": "custId"
+            }
+          },
+          {
+            "Key": "Name",
+            "Value": "product-dev/DevService/VPC-Octank-DEV/IsolatedSubnet2"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "product-dev/DevService/VPC-Octank-DEV/IsolatedSubnet2/Subnet"
+      }
+    },
+    "DevServiceVPCOctankDEVIsolatedSubnet2RouteTable2856AD72": {
+      "Type": "AWS::EC2::RouteTable",
+      "Properties": {
+        "VpcId": {
+          "Ref": "DevServiceVPCOctankDEV7EF467BD"
+        },
+        "Tags": [
+          {
+            "Key": "custID",
+            "Value": {
+              "Ref": "custId"
+            }
+          },
+          {
+            "Key": "Name",
+            "Value": "product-dev/DevService/VPC-Octank-DEV/IsolatedSubnet2"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "product-dev/DevService/VPC-Octank-DEV/IsolatedSubnet2/RouteTable"
+      }
+    },
+    "DevServiceVPCOctankDEVIsolatedSubnet2RouteTableAssociation8A8B2E25": {
+      "Type": "AWS::EC2::SubnetRouteTableAssociation",
+      "Properties": {
+        "RouteTableId": {
+          "Ref": "DevServiceVPCOctankDEVIsolatedSubnet2RouteTable2856AD72"
+        },
+        "SubnetId": {
+          "Ref": "DevServiceVPCOctankDEVIsolatedSubnet2Subnet0EA86E55"
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "product-dev/DevService/VPC-Octank-DEV/IsolatedSubnet2/RouteTableAssociation"
+      }
+    },
+    "DevServiceVPCOctankDEVIsolatedSubnet3Subnet96C8EEDE": {
+      "Type": "AWS::EC2::Subnet",
+      "Properties": {
+        "CidrBlock": "192.168.0.160/27",
+        "VpcId": {
+          "Ref": "DevServiceVPCOctankDEV7EF467BD"
+        },
+        "AvailabilityZone": "us-east-2c",
+        "MapPublicIpOnLaunch": false,
+        "Tags": [
+          {
+            "Key": "aws-cdk:subnet-name",
+            "Value": "Isolated"
+          },
+          {
+            "Key": "aws-cdk:subnet-type",
+            "Value": "Isolated"
+          },
+          {
+            "Key": "custID",
+            "Value": {
+              "Ref": "custId"
+            }
+          },
+          {
+            "Key": "Name",
+            "Value": "product-dev/DevService/VPC-Octank-DEV/IsolatedSubnet3"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "product-dev/DevService/VPC-Octank-DEV/IsolatedSubnet3/Subnet"
+      }
+    },
+    "DevServiceVPCOctankDEVIsolatedSubnet3RouteTableEF718608": {
+      "Type": "AWS::EC2::RouteTable",
+      "Properties": {
+        "VpcId": {
+          "Ref": "DevServiceVPCOctankDEV7EF467BD"
+        },
+        "Tags": [
+          {
+            "Key": "custID",
+            "Value": {
+              "Ref": "custId"
+            }
+          },
+          {
+            "Key": "Name",
+            "Value": "product-dev/DevService/VPC-Octank-DEV/IsolatedSubnet3"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "product-dev/DevService/VPC-Octank-DEV/IsolatedSubnet3/RouteTable"
+      }
+    },
+    "DevServiceVPCOctankDEVIsolatedSubnet3RouteTableAssociation36AA4E3A": {
+      "Type": "AWS::EC2::SubnetRouteTableAssociation",
+      "Properties": {
+        "RouteTableId": {
+          "Ref": "DevServiceVPCOctankDEVIsolatedSubnet3RouteTableEF718608"
+        },
+        "SubnetId": {
+          "Ref": "DevServiceVPCOctankDEVIsolatedSubnet3Subnet96C8EEDE"
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "product-dev/DevService/VPC-Octank-DEV/IsolatedSubnet3/RouteTableAssociation"
+      }
+    },
+    "DevServiceVPCOctankDEVIGW2F354A97": {
+      "Type": "AWS::EC2::InternetGateway",
+      "Properties": {
+        "Tags": [
+          {
+            "Key": "custID",
+            "Value": {
+              "Ref": "custId"
+            }
+          },
+          {
+            "Key": "Name",
+            "Value": "product-dev/DevService/VPC-Octank-DEV"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "product-dev/DevService/VPC-Octank-DEV/IGW"
+      }
+    },
+    "DevServiceVPCOctankDEVVPCGWF9EA77C3": {
+      "Type": "AWS::EC2::VPCGatewayAttachment",
+      "Properties": {
+        "VpcId": {
+          "Ref": "DevServiceVPCOctankDEV7EF467BD"
+        },
+        "InternetGatewayId": {
+          "Ref": "DevServiceVPCOctankDEVIGW2F354A97"
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "product-dev/DevService/VPC-Octank-DEV/VPCGW"
+      }
+    },
+    "DevServiceDevStore30821AF6": {
+      "Type": "AWS::S3::Bucket",
+      "Properties": {
+        "Tags": [
+          {
+            "Key": "custID",
+            "Value": {
+              "Ref": "custId"
+            }
+          }
+        ]
+      },
+      "UpdateReplacePolicy": "Retain",
+      "DeletionPolicy": "Retain",
+      "Metadata": {
+        "aws:cdk:path": "product-dev/DevService/DevStore/Resource"
+      }
+    },
+    "DevServiceDevHandlerServiceRoleC4995E6E": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "lambda.amazonaws.com"
+              }
+            }
+          ],
+          "Version": "2012-10-17"
+        },
+        "ManagedPolicyArns": [
+          {
+            "Fn::Join": [
+              "",
+              [
+                "arn:",
+                {
+                  "Ref": "AWS::Partition"
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+              ]
+            ]
+          }
+        ],
+        "Tags": [
+          {
+            "Key": "custID",
+            "Value": {
+              "Ref": "custId"
+            }
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "product-dev/DevService/DevHandler/ServiceRole/Resource"
+      }
+    },
+    "DevServiceDevHandlerServiceRoleDefaultPolicyF0C471F3": {
+      "Type": "AWS::IAM::Policy",
+      "Properties": {
+        "PolicyDocument": {
+          "Statement": [
+            {
+              "Action": [
+                "s3:GetObject*",
+                "s3:GetBucket*",
+                "s3:List*",
+                "s3:DeleteObject*",
+                "s3:PutObject*",
+                "s3:Abort*"
+              ],
+              "Effect": "Allow",
+              "Resource": [
+                {
+                  "Fn::GetAtt": [
+                    "DevServiceDevStore30821AF6",
+                    "Arn"
+                  ]
+                },
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      {
+                        "Fn::GetAtt": [
+                          "DevServiceDevStore30821AF6",
+                          "Arn"
+                        ]
+                      },
+                      "/*"
+                    ]
+                  ]
+                }
+              ]
+            }
+          ],
+          "Version": "2012-10-17"
+        },
+        "PolicyName": "DevServiceDevHandlerServiceRoleDefaultPolicyF0C471F3",
+        "Roles": [
+          {
+            "Ref": "DevServiceDevHandlerServiceRoleC4995E6E"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "product-dev/DevService/DevHandler/ServiceRole/DefaultPolicy/Resource"
+      }
+    },
+    "DevServiceDevHandler5882D5A6": {
+      "Type": "AWS::Lambda::Function",
+      "Properties": {
+        "Code": {
+          "S3Bucket": {
+            "Ref": "AssetParametersaacad069d2f055a63ca0d41a6848d465f936a2b60f5f4e1ba925b441e9f6728aS3BucketAAA2CE8F"
+          },
+          "S3Key": {
+            "Fn::Join": [
+              "",
+              [
+                {
+                  "Fn::Select": [
+                    0,
+                    {
+                      "Fn::Split": [
+                        "||",
+                        {
+                          "Ref": "AssetParametersaacad069d2f055a63ca0d41a6848d465f936a2b60f5f4e1ba925b441e9f6728aS3VersionKeyF3ED2B69"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "Fn::Select": [
+                    1,
+                    {
+                      "Fn::Split": [
+                        "||",
+                        {
+                          "Ref": "AssetParametersaacad069d2f055a63ca0d41a6848d465f936a2b60f5f4e1ba925b441e9f6728aS3VersionKeyF3ED2B69"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            ]
+          }
+        },
+        "Handler": "dev.main",
+        "Role": {
+          "Fn::GetAtt": [
+            "DevServiceDevHandlerServiceRoleC4995E6E",
+            "Arn"
+          ]
+        },
+        "Runtime": "nodejs10.x",
+        "Environment": {
+          "Variables": {
+            "BUCKET": {
+              "Ref": "DevServiceDevStore30821AF6"
+            }
+          }
+        },
+        "Tags": [
+          {
+            "Key": "custID",
+            "Value": {
+              "Ref": "custId"
+            }
+          }
+        ]
+      },
+      "DependsOn": [
+        "DevServiceDevHandlerServiceRoleDefaultPolicyF0C471F3",
+        "DevServiceDevHandlerServiceRoleC4995E6E"
+      ],
+      "Metadata": {
+        "aws:cdk:path": "product-dev/DevService/DevHandler/Resource",
+        "aws:asset:path": "asset.aacad069d2f055a63ca0d41a6848d465f936a2b60f5f4e1ba925b441e9f6728a",
+        "aws:asset:property": "Code"
+      }
+    },
+    "DevServicedevapiF814F0ED": {
+      "Type": "AWS::ApiGateway::RestApi",
+      "Properties": {
+        "Description": "This service serves dev.",
+        "Name": "Dev Service",
+        "Tags": [
+          {
+            "Key": "custID",
+            "Value": {
+              "Ref": "custId"
+            }
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "product-dev/DevService/dev-api/Resource"
+      }
+    },
+    "DevServicedevapiCloudWatchRole8B1A4907": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "apigateway.amazonaws.com"
+              }
+            }
+          ],
+          "Version": "2012-10-17"
+        },
+        "ManagedPolicyArns": [
+          {
+            "Fn::Join": [
+              "",
+              [
+                "arn:",
+                {
+                  "Ref": "AWS::Partition"
+                },
+                ":iam::aws:policy/service-role/AmazonAPIGatewayPushToCloudWatchLogs"
+              ]
+            ]
+          }
+        ],
+        "Tags": [
+          {
+            "Key": "custID",
+            "Value": {
+              "Ref": "custId"
+            }
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "product-dev/DevService/dev-api/CloudWatchRole/Resource"
+      }
+    },
+    "DevServicedevapiAccountE46D741D": {
+      "Type": "AWS::ApiGateway::Account",
+      "Properties": {
+        "CloudWatchRoleArn": {
+          "Fn::GetAtt": [
+            "DevServicedevapiCloudWatchRole8B1A4907",
+            "Arn"
+          ]
+        }
+      },
+      "DependsOn": [
+        "DevServicedevapiF814F0ED"
+      ],
+      "Metadata": {
+        "aws:cdk:path": "product-dev/DevService/dev-api/Account"
+      }
+    },
+    "DevServicedevapiDeployment1DC5C5172f633f306e9b2154eb473f7cc3b1e588": {
+      "Type": "AWS::ApiGateway::Deployment",
+      "Properties": {
+        "RestApiId": {
+          "Ref": "DevServicedevapiF814F0ED"
+        },
+        "Description": "Automatically created by the RestApi construct"
+      },
+      "DependsOn": [
+        "DevServicedevapiidDELETE277B4F75",
+        "DevServicedevapiidGET2D854AFA",
+        "DevServicedevapiidPOSTF7BAF42A",
+        "DevServicedevapiid2E99051C",
+        "DevServicedevapiGET6FE7EADF"
+      ],
+      "Metadata": {
+        "aws:cdk:path": "product-dev/DevService/dev-api/Deployment/Resource"
+      }
+    },
+    "DevServicedevapiDeploymentStageprod40767568": {
+      "Type": "AWS::ApiGateway::Stage",
+      "Properties": {
+        "RestApiId": {
+          "Ref": "DevServicedevapiF814F0ED"
+        },
+        "DeploymentId": {
+          "Ref": "DevServicedevapiDeployment1DC5C5172f633f306e9b2154eb473f7cc3b1e588"
+        },
+        "StageName": "prod",
+        "Tags": [
+          {
+            "Key": "custID",
+            "Value": {
+              "Ref": "custId"
+            }
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "product-dev/DevService/dev-api/DeploymentStage.prod/Resource"
+      }
+    },
+    "DevServicedevapiGETApiPermissionproductdevDevServicedevapi70103FB2GET3FE820CE": {
+      "Type": "AWS::Lambda::Permission",
+      "Properties": {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "DevServiceDevHandler5882D5A6",
+            "Arn"
+          ]
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": {
+          "Fn::Join": [
+            "",
+            [
+              "arn:",
+              {
+                "Ref": "AWS::Partition"
+              },
+              ":execute-api:us-east-2:610880146692:",
+              {
+                "Ref": "DevServicedevapiF814F0ED"
+              },
+              "/",
+              {
+                "Ref": "DevServicedevapiDeploymentStageprod40767568"
+              },
+              "/GET/"
+            ]
+          ]
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "product-dev/DevService/dev-api/Default/GET/ApiPermission.productdevDevServicedevapi70103FB2.GET.."
+      }
+    },
+    "DevServicedevapiGETApiPermissionTestproductdevDevServicedevapi70103FB2GET56366887": {
+      "Type": "AWS::Lambda::Permission",
+      "Properties": {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "DevServiceDevHandler5882D5A6",
+            "Arn"
+          ]
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": {
+          "Fn::Join": [
+            "",
+            [
+              "arn:",
+              {
+                "Ref": "AWS::Partition"
+              },
+              ":execute-api:us-east-2:610880146692:",
+              {
+                "Ref": "DevServicedevapiF814F0ED"
+              },
+              "/test-invoke-stage/GET/"
+            ]
+          ]
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "product-dev/DevService/dev-api/Default/GET/ApiPermission.Test.productdevDevServicedevapi70103FB2.GET.."
+      }
+    },
+    "DevServicedevapiGET6FE7EADF": {
+      "Type": "AWS::ApiGateway::Method",
+      "Properties": {
+        "HttpMethod": "GET",
+        "ResourceId": {
+          "Fn::GetAtt": [
+            "DevServicedevapiF814F0ED",
+            "RootResourceId"
+          ]
+        },
+        "RestApiId": {
+          "Ref": "DevServicedevapiF814F0ED"
+        },
+        "AuthorizationType": "NONE",
+        "Integration": {
+          "IntegrationHttpMethod": "POST",
+          "RequestTemplates": {
+            "application/json": "{ \"statusCode\": \"200\" }"
+          },
+          "Type": "AWS_PROXY",
+          "Uri": {
+            "Fn::Join": [
+              "",
+              [
+                "arn:",
+                {
+                  "Ref": "AWS::Partition"
+                },
+                ":apigateway:us-east-2:lambda:path/2015-03-31/functions/",
+                {
+                  "Fn::GetAtt": [
+                    "DevServiceDevHandler5882D5A6",
+                    "Arn"
+                  ]
+                },
+                "/invocations"
+              ]
+            ]
+          }
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "product-dev/DevService/dev-api/Default/GET/Resource"
+      }
+    },
+    "DevServicedevapiid2E99051C": {
+      "Type": "AWS::ApiGateway::Resource",
+      "Properties": {
+        "ParentId": {
+          "Fn::GetAtt": [
+            "DevServicedevapiF814F0ED",
+            "RootResourceId"
+          ]
+        },
+        "PathPart": "{id}",
+        "RestApiId": {
+          "Ref": "DevServicedevapiF814F0ED"
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "product-dev/DevService/dev-api/Default/{id}/Resource"
+      }
+    },
+    "DevServicedevapiidPOSTApiPermissionproductdevDevServicedevapi70103FB2POSTid8FB8C485": {
+      "Type": "AWS::Lambda::Permission",
+      "Properties": {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "DevServiceDevHandler5882D5A6",
+            "Arn"
+          ]
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": {
+          "Fn::Join": [
+            "",
+            [
+              "arn:",
+              {
+                "Ref": "AWS::Partition"
+              },
+              ":execute-api:us-east-2:610880146692:",
+              {
+                "Ref": "DevServicedevapiF814F0ED"
+              },
+              "/",
+              {
+                "Ref": "DevServicedevapiDeploymentStageprod40767568"
+              },
+              "/POST/*"
+            ]
+          ]
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "product-dev/DevService/dev-api/Default/{id}/POST/ApiPermission.productdevDevServicedevapi70103FB2.POST..{id}"
+      }
+    },
+    "DevServicedevapiidPOSTApiPermissionTestproductdevDevServicedevapi70103FB2POSTid6473B797": {
+      "Type": "AWS::Lambda::Permission",
+      "Properties": {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "DevServiceDevHandler5882D5A6",
+            "Arn"
+          ]
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": {
+          "Fn::Join": [
+            "",
+            [
+              "arn:",
+              {
+                "Ref": "AWS::Partition"
+              },
+              ":execute-api:us-east-2:610880146692:",
+              {
+                "Ref": "DevServicedevapiF814F0ED"
+              },
+              "/test-invoke-stage/POST/*"
+            ]
+          ]
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "product-dev/DevService/dev-api/Default/{id}/POST/ApiPermission.Test.productdevDevServicedevapi70103FB2.POST..{id}"
+      }
+    },
+    "DevServicedevapiidPOSTF7BAF42A": {
+      "Type": "AWS::ApiGateway::Method",
+      "Properties": {
+        "HttpMethod": "POST",
+        "ResourceId": {
+          "Ref": "DevServicedevapiid2E99051C"
+        },
+        "RestApiId": {
+          "Ref": "DevServicedevapiF814F0ED"
+        },
+        "AuthorizationType": "NONE",
+        "Integration": {
+          "IntegrationHttpMethod": "POST",
+          "Type": "AWS_PROXY",
+          "Uri": {
+            "Fn::Join": [
+              "",
+              [
+                "arn:",
+                {
+                  "Ref": "AWS::Partition"
+                },
+                ":apigateway:us-east-2:lambda:path/2015-03-31/functions/",
+                {
+                  "Fn::GetAtt": [
+                    "DevServiceDevHandler5882D5A6",
+                    "Arn"
+                  ]
+                },
+                "/invocations"
+              ]
+            ]
+          }
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "product-dev/DevService/dev-api/Default/{id}/POST/Resource"
+      }
+    },
+    "DevServicedevapiidGETApiPermissionproductdevDevServicedevapi70103FB2GETidEBF668ED": {
+      "Type": "AWS::Lambda::Permission",
+      "Properties": {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "DevServiceDevHandler5882D5A6",
+            "Arn"
+          ]
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": {
+          "Fn::Join": [
+            "",
+            [
+              "arn:",
+              {
+                "Ref": "AWS::Partition"
+              },
+              ":execute-api:us-east-2:610880146692:",
+              {
+                "Ref": "DevServicedevapiF814F0ED"
+              },
+              "/",
+              {
+                "Ref": "DevServicedevapiDeploymentStageprod40767568"
+              },
+              "/GET/*"
+            ]
+          ]
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "product-dev/DevService/dev-api/Default/{id}/GET/ApiPermission.productdevDevServicedevapi70103FB2.GET..{id}"
+      }
+    },
+    "DevServicedevapiidGETApiPermissionTestproductdevDevServicedevapi70103FB2GETidE56A7B42": {
+      "Type": "AWS::Lambda::Permission",
+      "Properties": {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "DevServiceDevHandler5882D5A6",
+            "Arn"
+          ]
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": {
+          "Fn::Join": [
+            "",
+            [
+              "arn:",
+              {
+                "Ref": "AWS::Partition"
+              },
+              ":execute-api:us-east-2:610880146692:",
+              {
+                "Ref": "DevServicedevapiF814F0ED"
+              },
+              "/test-invoke-stage/GET/*"
+            ]
+          ]
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "product-dev/DevService/dev-api/Default/{id}/GET/ApiPermission.Test.productdevDevServicedevapi70103FB2.GET..{id}"
+      }
+    },
+    "DevServicedevapiidGET2D854AFA": {
+      "Type": "AWS::ApiGateway::Method",
+      "Properties": {
+        "HttpMethod": "GET",
+        "ResourceId": {
+          "Ref": "DevServicedevapiid2E99051C"
+        },
+        "RestApiId": {
+          "Ref": "DevServicedevapiF814F0ED"
+        },
+        "AuthorizationType": "NONE",
+        "Integration": {
+          "IntegrationHttpMethod": "POST",
+          "Type": "AWS_PROXY",
+          "Uri": {
+            "Fn::Join": [
+              "",
+              [
+                "arn:",
+                {
+                  "Ref": "AWS::Partition"
+                },
+                ":apigateway:us-east-2:lambda:path/2015-03-31/functions/",
+                {
+                  "Fn::GetAtt": [
+                    "DevServiceDevHandler5882D5A6",
+                    "Arn"
+                  ]
+                },
+                "/invocations"
+              ]
+            ]
+          }
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "product-dev/DevService/dev-api/Default/{id}/GET/Resource"
+      }
+    },
+    "DevServicedevapiidDELETEApiPermissionproductdevDevServicedevapi70103FB2DELETEidCEEF75F0": {
+      "Type": "AWS::Lambda::Permission",
+      "Properties": {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "DevServiceDevHandler5882D5A6",
+            "Arn"
+          ]
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": {
+          "Fn::Join": [
+            "",
+            [
+              "arn:",
+              {
+                "Ref": "AWS::Partition"
+              },
+              ":execute-api:us-east-2:610880146692:",
+              {
+                "Ref": "DevServicedevapiF814F0ED"
+              },
+              "/",
+              {
+                "Ref": "DevServicedevapiDeploymentStageprod40767568"
+              },
+              "/DELETE/*"
+            ]
+          ]
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "product-dev/DevService/dev-api/Default/{id}/DELETE/ApiPermission.productdevDevServicedevapi70103FB2.DELETE..{id}"
+      }
+    },
+    "DevServicedevapiidDELETEApiPermissionTestproductdevDevServicedevapi70103FB2DELETEid5E1AB677": {
+      "Type": "AWS::Lambda::Permission",
+      "Properties": {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "DevServiceDevHandler5882D5A6",
+            "Arn"
+          ]
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": {
+          "Fn::Join": [
+            "",
+            [
+              "arn:",
+              {
+                "Ref": "AWS::Partition"
+              },
+              ":execute-api:us-east-2:610880146692:",
+              {
+                "Ref": "DevServicedevapiF814F0ED"
+              },
+              "/test-invoke-stage/DELETE/*"
+            ]
+          ]
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "product-dev/DevService/dev-api/Default/{id}/DELETE/ApiPermission.Test.productdevDevServicedevapi70103FB2.DELETE..{id}"
+      }
+    },
+    "DevServicedevapiidDELETE277B4F75": {
+      "Type": "AWS::ApiGateway::Method",
+      "Properties": {
+        "HttpMethod": "DELETE",
+        "ResourceId": {
+          "Ref": "DevServicedevapiid2E99051C"
+        },
+        "RestApiId": {
+          "Ref": "DevServicedevapiF814F0ED"
+        },
+        "AuthorizationType": "NONE",
+        "Integration": {
+          "IntegrationHttpMethod": "POST",
+          "Type": "AWS_PROXY",
+          "Uri": {
+            "Fn::Join": [
+              "",
+              [
+                "arn:",
+                {
+                  "Ref": "AWS::Partition"
+                },
+                ":apigateway:us-east-2:lambda:path/2015-03-31/functions/",
+                {
+                  "Fn::GetAtt": [
+                    "DevServiceDevHandler5882D5A6",
+                    "Arn"
+                  ]
+                },
+                "/invocations"
+              ]
+            ]
+          }
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "product-dev/DevService/dev-api/Default/{id}/DELETE/Resource"
+      }
+    },
+    "CDKMetadata": {
+      "Type": "AWS::CDK::Metadata",
+      "Properties": {
+        "Modules": "aws-cdk=1.73.0,@aws-cdk/assets=1.78.0,@aws-cdk/aws-apigateway=1.78.0,@aws-cdk/aws-applicationautoscaling=1.78.0,@aws-cdk/aws-autoscaling-common=1.78.0,@aws-cdk/aws-certificatemanager=1.78.0,@aws-cdk/aws-cloudwatch=1.78.0,@aws-cdk/aws-codeguruprofiler=1.78.0,@aws-cdk/aws-ec2=1.78.0,@aws-cdk/aws-ecr=1.78.0,@aws-cdk/aws-ecr-assets=1.78.0,@aws-cdk/aws-efs=1.78.0,@aws-cdk/aws-elasticloadbalancingv2=1.78.0,@aws-cdk/aws-events=1.78.0,@aws-cdk/aws-iam=1.78.0,@aws-cdk/aws-kms=1.78.0,@aws-cdk/aws-lambda=1.78.0,@aws-cdk/aws-logs=1.78.0,@aws-cdk/aws-rds=1.78.0,@aws-cdk/aws-route53=1.78.0,@aws-cdk/aws-s3=1.78.0,@aws-cdk/aws-s3-assets=1.78.0,@aws-cdk/aws-sam=1.78.0,@aws-cdk/aws-secretsmanager=1.78.0,@aws-cdk/aws-sqs=1.78.0,@aws-cdk/aws-ssm=1.78.0,@aws-cdk/cloud-assembly-schema=1.78.0,@aws-cdk/core=1.78.0,@aws-cdk/cx-api=1.78.0,@aws-cdk/region-info=1.78.0,jsii-runtime=Python/3.9.0"
+      },
+      "Metadata": {
+        "aws:cdk:path": "product-dev/CDKMetadata/Default"
+      }
+    }
+  },
+  "Outputs": {
+    "DevServicedevapiEndpoint97DDBAAA": {
+      "Value": {
+        "Fn::Join": [
+          "",
+          [
+            "https://",
+            {
+              "Ref": "DevServicedevapiF814F0ED"
+            },
+            ".execute-api.us-east-2.",
+            {
+              "Ref": "AWS::URLSuffix"
+            },
+            "/",
+            {
+              "Ref": "DevServicedevapiDeploymentStageprod40767568"
+            },
+            "/"
+          ]
+        ]
+      }
+    }
+  }
+}
