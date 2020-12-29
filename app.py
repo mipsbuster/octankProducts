@@ -19,6 +19,6 @@ CoreStack(app,"core", env=prod)
 RDSStackBronze(app, "product-bronze", env=prod)
 RDSStackSilver(app, "product-silver", env=prod)
 RDSStackGold(app, "product-gold", env=prod)
-MyDevServiceStack(app, "product-dev", env=prod)
+#MyDevServiceStack(app, "product-dev", env=prod)
 
 app.synth()

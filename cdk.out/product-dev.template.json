@@ -131,6 +131,56 @@
         "aws:cdk:path": "product-dev/DevService/VPC-Octank-DEV/PublicSubnet1/DefaultRoute"
       }
     },
+    "DevServiceVPCOctankDEVPublicSubnet1EIPD775600B": {
+      "Type": "AWS::EC2::EIP",
+      "Properties": {
+        "Domain": "vpc",
+        "Tags": [
+          {
+            "Key": "custID",
+            "Value": {
+              "Ref": "custId"
+            }
+          },
+          {
+            "Key": "Name",
+            "Value": "product-dev/DevService/VPC-Octank-DEV/PublicSubnet1"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "product-dev/DevService/VPC-Octank-DEV/PublicSubnet1/EIP"
+      }
+    },
+    "DevServiceVPCOctankDEVPublicSubnet1NATGateway81465E8E": {
+      "Type": "AWS::EC2::NatGateway",
+      "Properties": {
+        "AllocationId": {
+          "Fn::GetAtt": [
+            "DevServiceVPCOctankDEVPublicSubnet1EIPD775600B",
+            "AllocationId"
+          ]
+        },
+        "SubnetId": {
+          "Ref": "DevServiceVPCOctankDEVPublicSubnet1Subnet2F6DD072"
+        },
+        "Tags": [
+          {
+            "Key": "custID",
+            "Value": {
+              "Ref": "custId"
+            }
+          },
+          {
+            "Key": "Name",
+            "Value": "product-dev/DevService/VPC-Octank-DEV/PublicSubnet1"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "product-dev/DevService/VPC-Octank-DEV/PublicSubnet1/NATGateway"
+      }
+    },
     "DevServiceVPCOctankDEVPublicSubnet2SubnetE8140528": {
       "Type": "AWS::EC2::Subnet",
       "Properties": {
@@ -218,6 +268,56 @@
       ],
       "Metadata": {
         "aws:cdk:path": "product-dev/DevService/VPC-Octank-DEV/PublicSubnet2/DefaultRoute"
+      }
+    },
+    "DevServiceVPCOctankDEVPublicSubnet2EIPD3AE2202": {
+      "Type": "AWS::EC2::EIP",
+      "Properties": {
+        "Domain": "vpc",
+        "Tags": [
+          {
+            "Key": "custID",
+            "Value": {
+              "Ref": "custId"
+            }
+          },
+          {
+            "Key": "Name",
+            "Value": "product-dev/DevService/VPC-Octank-DEV/PublicSubnet2"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "product-dev/DevService/VPC-Octank-DEV/PublicSubnet2/EIP"
+      }
+    },
+    "DevServiceVPCOctankDEVPublicSubnet2NATGateway6677C525": {
+      "Type": "AWS::EC2::NatGateway",
+      "Properties": {
+        "AllocationId": {
+          "Fn::GetAtt": [
+            "DevServiceVPCOctankDEVPublicSubnet2EIPD3AE2202",
+            "AllocationId"
+          ]
+        },
+        "SubnetId": {
+          "Ref": "DevServiceVPCOctankDEVPublicSubnet2SubnetE8140528"
+        },
+        "Tags": [
+          {
+            "Key": "custID",
+            "Value": {
+              "Ref": "custId"
+            }
+          },
+          {
+            "Key": "Name",
+            "Value": "product-dev/DevService/VPC-Octank-DEV/PublicSubnet2"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "product-dev/DevService/VPC-Octank-DEV/PublicSubnet2/NATGateway"
       }
     },
     "DevServiceVPCOctankDEVPublicSubnet3Subnet3281C82D": {
@@ -309,7 +409,57 @@
         "aws:cdk:path": "product-dev/DevService/VPC-Octank-DEV/PublicSubnet3/DefaultRoute"
       }
     },
-    "DevServiceVPCOctankDEVIsolatedSubnet1Subnet0E557CCF": {
+    "DevServiceVPCOctankDEVPublicSubnet3EIP95F1C1D4": {
+      "Type": "AWS::EC2::EIP",
+      "Properties": {
+        "Domain": "vpc",
+        "Tags": [
+          {
+            "Key": "custID",
+            "Value": {
+              "Ref": "custId"
+            }
+          },
+          {
+            "Key": "Name",
+            "Value": "product-dev/DevService/VPC-Octank-DEV/PublicSubnet3"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "product-dev/DevService/VPC-Octank-DEV/PublicSubnet3/EIP"
+      }
+    },
+    "DevServiceVPCOctankDEVPublicSubnet3NATGatewayF88B6892": {
+      "Type": "AWS::EC2::NatGateway",
+      "Properties": {
+        "AllocationId": {
+          "Fn::GetAtt": [
+            "DevServiceVPCOctankDEVPublicSubnet3EIP95F1C1D4",
+            "AllocationId"
+          ]
+        },
+        "SubnetId": {
+          "Ref": "DevServiceVPCOctankDEVPublicSubnet3Subnet3281C82D"
+        },
+        "Tags": [
+          {
+            "Key": "custID",
+            "Value": {
+              "Ref": "custId"
+            }
+          },
+          {
+            "Key": "Name",
+            "Value": "product-dev/DevService/VPC-Octank-DEV/PublicSubnet3"
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "product-dev/DevService/VPC-Octank-DEV/PublicSubnet3/NATGateway"
+      }
+    },
+    "DevServiceVPCOctankDEVPrivateSubnet1Subnet10E92DF4": {
       "Type": "AWS::EC2::Subnet",
       "Properties": {
         "CidrBlock": "192.168.0.96/27",
@@ -321,11 +471,11 @@
         "Tags": [
           {
             "Key": "aws-cdk:subnet-name",
-            "Value": "Isolated"
+            "Value": "Private"
           },
           {
             "Key": "aws-cdk:subnet-type",
-            "Value": "Isolated"
+            "Value": "Private"
           },
           {
             "Key": "custID",
@@ -335,15 +485,15 @@
           },
           {
             "Key": "Name",
-            "Value": "product-dev/DevService/VPC-Octank-DEV/IsolatedSubnet1"
+            "Value": "product-dev/DevService/VPC-Octank-DEV/PrivateSubnet1"
           }
         ]
       },
       "Metadata": {
-        "aws:cdk:path": "product-dev/DevService/VPC-Octank-DEV/IsolatedSubnet1/Subnet"
+        "aws:cdk:path": "product-dev/DevService/VPC-Octank-DEV/PrivateSubnet1/Subnet"
       }
     },
-    "DevServiceVPCOctankDEVIsolatedSubnet1RouteTable3B743BD5": {
+    "DevServiceVPCOctankDEVPrivateSubnet1RouteTable3273B4B5": {
       "Type": "AWS::EC2::RouteTable",
       "Properties": {
         "VpcId": {
@@ -358,29 +508,44 @@
           },
           {
             "Key": "Name",
-            "Value": "product-dev/DevService/VPC-Octank-DEV/IsolatedSubnet1"
+            "Value": "product-dev/DevService/VPC-Octank-DEV/PrivateSubnet1"
           }
         ]
       },
       "Metadata": {
-        "aws:cdk:path": "product-dev/DevService/VPC-Octank-DEV/IsolatedSubnet1/RouteTable"
+        "aws:cdk:path": "product-dev/DevService/VPC-Octank-DEV/PrivateSubnet1/RouteTable"
       }
     },
-    "DevServiceVPCOctankDEVIsolatedSubnet1RouteTableAssociation73131130": {
+    "DevServiceVPCOctankDEVPrivateSubnet1RouteTableAssociationBDA20B26": {
       "Type": "AWS::EC2::SubnetRouteTableAssociation",
       "Properties": {
         "RouteTableId": {
-          "Ref": "DevServiceVPCOctankDEVIsolatedSubnet1RouteTable3B743BD5"
+          "Ref": "DevServiceVPCOctankDEVPrivateSubnet1RouteTable3273B4B5"
         },
         "SubnetId": {
-          "Ref": "DevServiceVPCOctankDEVIsolatedSubnet1Subnet0E557CCF"
+          "Ref": "DevServiceVPCOctankDEVPrivateSubnet1Subnet10E92DF4"
         }
       },
       "Metadata": {
-        "aws:cdk:path": "product-dev/DevService/VPC-Octank-DEV/IsolatedSubnet1/RouteTableAssociation"
+        "aws:cdk:path": "product-dev/DevService/VPC-Octank-DEV/PrivateSubnet1/RouteTableAssociation"
       }
     },
-    "DevServiceVPCOctankDEVIsolatedSubnet2Subnet0EA86E55": {
+    "DevServiceVPCOctankDEVPrivateSubnet1DefaultRoute01528572": {
+      "Type": "AWS::EC2::Route",
+      "Properties": {
+        "RouteTableId": {
+          "Ref": "DevServiceVPCOctankDEVPrivateSubnet1RouteTable3273B4B5"
+        },
+        "DestinationCidrBlock": "0.0.0.0/0",
+        "NatGatewayId": {
+          "Ref": "DevServiceVPCOctankDEVPublicSubnet1NATGateway81465E8E"
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "product-dev/DevService/VPC-Octank-DEV/PrivateSubnet1/DefaultRoute"
+      }
+    },
+    "DevServiceVPCOctankDEVPrivateSubnet2SubnetC67D7397": {
       "Type": "AWS::EC2::Subnet",
       "Properties": {
         "CidrBlock": "192.168.0.128/27",
@@ -392,11 +557,11 @@
         "Tags": [
           {
             "Key": "aws-cdk:subnet-name",
-            "Value": "Isolated"
+            "Value": "Private"
           },
           {
             "Key": "aws-cdk:subnet-type",
-            "Value": "Isolated"
+            "Value": "Private"
           },
           {
             "Key": "custID",
@@ -406,15 +571,15 @@
           },
           {
             "Key": "Name",
-            "Value": "product-dev/DevService/VPC-Octank-DEV/IsolatedSubnet2"
+            "Value": "product-dev/DevService/VPC-Octank-DEV/PrivateSubnet2"
           }
         ]
       },
       "Metadata": {
-        "aws:cdk:path": "product-dev/DevService/VPC-Octank-DEV/IsolatedSubnet2/Subnet"
+        "aws:cdk:path": "product-dev/DevService/VPC-Octank-DEV/PrivateSubnet2/Subnet"
       }
     },
-    "DevServiceVPCOctankDEVIsolatedSubnet2RouteTable2856AD72": {
+    "DevServiceVPCOctankDEVPrivateSubnet2RouteTableC83BBB5C": {
       "Type": "AWS::EC2::RouteTable",
       "Properties": {
         "VpcId": {
@@ -429,29 +594,44 @@
           },
           {
             "Key": "Name",
-            "Value": "product-dev/DevService/VPC-Octank-DEV/IsolatedSubnet2"
+            "Value": "product-dev/DevService/VPC-Octank-DEV/PrivateSubnet2"
           }
         ]
       },
       "Metadata": {
-        "aws:cdk:path": "product-dev/DevService/VPC-Octank-DEV/IsolatedSubnet2/RouteTable"
+        "aws:cdk:path": "product-dev/DevService/VPC-Octank-DEV/PrivateSubnet2/RouteTable"
       }
     },
-    "DevServiceVPCOctankDEVIsolatedSubnet2RouteTableAssociation8A8B2E25": {
+    "DevServiceVPCOctankDEVPrivateSubnet2RouteTableAssociationC4D68230": {
       "Type": "AWS::EC2::SubnetRouteTableAssociation",
       "Properties": {
         "RouteTableId": {
-          "Ref": "DevServiceVPCOctankDEVIsolatedSubnet2RouteTable2856AD72"
+          "Ref": "DevServiceVPCOctankDEVPrivateSubnet2RouteTableC83BBB5C"
         },
         "SubnetId": {
-          "Ref": "DevServiceVPCOctankDEVIsolatedSubnet2Subnet0EA86E55"
+          "Ref": "DevServiceVPCOctankDEVPrivateSubnet2SubnetC67D7397"
         }
       },
       "Metadata": {
-        "aws:cdk:path": "product-dev/DevService/VPC-Octank-DEV/IsolatedSubnet2/RouteTableAssociation"
+        "aws:cdk:path": "product-dev/DevService/VPC-Octank-DEV/PrivateSubnet2/RouteTableAssociation"
       }
     },
-    "DevServiceVPCOctankDEVIsolatedSubnet3Subnet96C8EEDE": {
+    "DevServiceVPCOctankDEVPrivateSubnet2DefaultRoute958E742A": {
+      "Type": "AWS::EC2::Route",
+      "Properties": {
+        "RouteTableId": {
+          "Ref": "DevServiceVPCOctankDEVPrivateSubnet2RouteTableC83BBB5C"
+        },
+        "DestinationCidrBlock": "0.0.0.0/0",
+        "NatGatewayId": {
+          "Ref": "DevServiceVPCOctankDEVPublicSubnet2NATGateway6677C525"
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "product-dev/DevService/VPC-Octank-DEV/PrivateSubnet2/DefaultRoute"
+      }
+    },
+    "DevServiceVPCOctankDEVPrivateSubnet3SubnetF033603B": {
       "Type": "AWS::EC2::Subnet",
       "Properties": {
         "CidrBlock": "192.168.0.160/27",
@@ -463,11 +643,11 @@
         "Tags": [
           {
             "Key": "aws-cdk:subnet-name",
-            "Value": "Isolated"
+            "Value": "Private"
           },
           {
             "Key": "aws-cdk:subnet-type",
-            "Value": "Isolated"
+            "Value": "Private"
           },
           {
             "Key": "custID",
@@ -477,15 +657,15 @@
           },
           {
             "Key": "Name",
-            "Value": "product-dev/DevService/VPC-Octank-DEV/IsolatedSubnet3"
+            "Value": "product-dev/DevService/VPC-Octank-DEV/PrivateSubnet3"
           }
         ]
       },
       "Metadata": {
-        "aws:cdk:path": "product-dev/DevService/VPC-Octank-DEV/IsolatedSubnet3/Subnet"
+        "aws:cdk:path": "product-dev/DevService/VPC-Octank-DEV/PrivateSubnet3/Subnet"
       }
     },
-    "DevServiceVPCOctankDEVIsolatedSubnet3RouteTableEF718608": {
+    "DevServiceVPCOctankDEVPrivateSubnet3RouteTableF0EA6BB3": {
       "Type": "AWS::EC2::RouteTable",
       "Properties": {
         "VpcId": {
@@ -500,26 +680,41 @@
           },
           {
             "Key": "Name",
-            "Value": "product-dev/DevService/VPC-Octank-DEV/IsolatedSubnet3"
+            "Value": "product-dev/DevService/VPC-Octank-DEV/PrivateSubnet3"
           }
         ]
       },
       "Metadata": {
-        "aws:cdk:path": "product-dev/DevService/VPC-Octank-DEV/IsolatedSubnet3/RouteTable"
+        "aws:cdk:path": "product-dev/DevService/VPC-Octank-DEV/PrivateSubnet3/RouteTable"
       }
     },
-    "DevServiceVPCOctankDEVIsolatedSubnet3RouteTableAssociation36AA4E3A": {
+    "DevServiceVPCOctankDEVPrivateSubnet3RouteTableAssociationBA65898C": {
       "Type": "AWS::EC2::SubnetRouteTableAssociation",
       "Properties": {
         "RouteTableId": {
-          "Ref": "DevServiceVPCOctankDEVIsolatedSubnet3RouteTableEF718608"
+          "Ref": "DevServiceVPCOctankDEVPrivateSubnet3RouteTableF0EA6BB3"
         },
         "SubnetId": {
-          "Ref": "DevServiceVPCOctankDEVIsolatedSubnet3Subnet96C8EEDE"
+          "Ref": "DevServiceVPCOctankDEVPrivateSubnet3SubnetF033603B"
         }
       },
       "Metadata": {
-        "aws:cdk:path": "product-dev/DevService/VPC-Octank-DEV/IsolatedSubnet3/RouteTableAssociation"
+        "aws:cdk:path": "product-dev/DevService/VPC-Octank-DEV/PrivateSubnet3/RouteTableAssociation"
+      }
+    },
+    "DevServiceVPCOctankDEVPrivateSubnet3DefaultRouteDCDE0EE6": {
+      "Type": "AWS::EC2::Route",
+      "Properties": {
+        "RouteTableId": {
+          "Ref": "DevServiceVPCOctankDEVPrivateSubnet3RouteTableF0EA6BB3"
+        },
+        "DestinationCidrBlock": "0.0.0.0/0",
+        "NatGatewayId": {
+          "Ref": "DevServiceVPCOctankDEVPublicSubnet3NATGatewayF88B6892"
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "product-dev/DevService/VPC-Octank-DEV/PrivateSubnet3/DefaultRoute"
       }
     },
     "DevServiceVPCOctankDEVIGW2F354A97": {
@@ -1312,6 +1507,171 @@
       },
       "Metadata": {
         "aws:cdk:path": "product-dev/DevService/dev-api/Default/{id}/DELETE/Resource"
+      }
+    },
+    "DevServicedatabasedev01SubnetGroup323CBE9A": {
+      "Type": "AWS::RDS::DBSubnetGroup",
+      "Properties": {
+        "DBSubnetGroupDescription": "Subnet group for database-dev01 database",
+        "SubnetIds": [
+          {
+            "Ref": "DevServiceVPCOctankDEVPrivateSubnet1Subnet10E92DF4"
+          },
+          {
+            "Ref": "DevServiceVPCOctankDEVPrivateSubnet2SubnetC67D7397"
+          },
+          {
+            "Ref": "DevServiceVPCOctankDEVPrivateSubnet3SubnetF033603B"
+          }
+        ],
+        "Tags": [
+          {
+            "Key": "custID",
+            "Value": {
+              "Ref": "custId"
+            }
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "product-dev/DevService/database-dev01/SubnetGroup/Default"
+      }
+    },
+    "DevServicedatabasedev01SecurityGroupB41163DF": {
+      "Type": "AWS::EC2::SecurityGroup",
+      "Properties": {
+        "GroupDescription": "Security group for database-dev01 database",
+        "SecurityGroupEgress": [
+          {
+            "CidrIp": "0.0.0.0/0",
+            "Description": "Allow all outbound traffic by default",
+            "IpProtocol": "-1"
+          }
+        ],
+        "Tags": [
+          {
+            "Key": "custID",
+            "Value": {
+              "Ref": "custId"
+            }
+          }
+        ],
+        "VpcId": {
+          "Ref": "DevServiceVPCOctankDEV7EF467BD"
+        }
+      },
+      "Metadata": {
+        "aws:cdk:path": "product-dev/DevService/database-dev01/SecurityGroup/Resource"
+      }
+    },
+    "DevServicedatabasedev01SecretE54D0BD6": {
+      "Type": "AWS::SecretsManager::Secret",
+      "Properties": {
+        "Description": {
+          "Fn::Join": [
+            "",
+            [
+              "Generated by the CDK for stack: ",
+              {
+                "Ref": "AWS::StackName"
+              }
+            ]
+          ]
+        },
+        "GenerateSecretString": {
+          "ExcludeCharacters": " %+~`#$&*()|[]{}:;<>?!'/@\"\\",
+          "GenerateStringKey": "password",
+          "PasswordLength": 30,
+          "SecretStringTemplate": "{\"username\":\"postgres\"}"
+        },
+        "Tags": [
+          {
+            "Key": "custID",
+            "Value": {
+              "Ref": "custId"
+            }
+          }
+        ]
+      },
+      "Metadata": {
+        "aws:cdk:path": "product-dev/DevService/database-dev01/Secret/Resource"
+      }
+    },
+    "DevServicedatabasedev01SecretAttachmentF25065EA": {
+      "Type": "AWS::SecretsManager::SecretTargetAttachment",
+      "Properties": {
+        "SecretId": {
+          "Ref": "DevServicedatabasedev01SecretE54D0BD6"
+        },
+        "TargetId": {
+          "Ref": "DevServicedatabasedev01F3A7C8BF"
+        },
+        "TargetType": "AWS::RDS::DBInstance"
+      },
+      "Metadata": {
+        "aws:cdk:path": "product-dev/DevService/database-dev01/Secret/Attachment/Resource"
+      }
+    },
+    "DevServicedatabasedev01F3A7C8BF": {
+      "Type": "AWS::RDS::DBInstance",
+      "Properties": {
+        "DBInstanceClass": "db.r4.large",
+        "AllocatedStorage": "100",
+        "CopyTagsToSnapshot": true,
+        "DBName": "db1",
+        "DBSubnetGroupName": {
+          "Ref": "DevServicedatabasedev01SubnetGroup323CBE9A"
+        },
+        "DeletionProtection": false,
+        "Engine": "postgres",
+        "EngineVersion": "12.4",
+        "MasterUsername": {
+          "Fn::Join": [
+            "",
+            [
+              "{{resolve:secretsmanager:",
+              {
+                "Ref": "DevServicedatabasedev01SecretE54D0BD6"
+              },
+              ":SecretString:username::}}"
+            ]
+          ]
+        },
+        "MasterUserPassword": {
+          "Fn::Join": [
+            "",
+            [
+              "{{resolve:secretsmanager:",
+              {
+                "Ref": "DevServicedatabasedev01SecretE54D0BD6"
+              },
+              ":SecretString:password::}}"
+            ]
+          ]
+        },
+        "Port": "5432",
+        "StorageType": "gp2",
+        "Tags": [
+          {
+            "Key": "custID",
+            "Value": {
+              "Ref": "custId"
+            }
+          }
+        ],
+        "VPCSecurityGroups": [
+          {
+            "Fn::GetAtt": [
+              "DevServicedatabasedev01SecurityGroupB41163DF",
+              "GroupId"
+            ]
+          }
+        ]
+      },
+      "UpdateReplacePolicy": "Delete",
+      "DeletionPolicy": "Delete",
+      "Metadata": {
+        "aws:cdk:path": "product-dev/DevService/database-dev01/Resource"
       }
     },
     "CDKMetadata": {
